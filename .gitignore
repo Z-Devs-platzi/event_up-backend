@@ -579,3 +579,12 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/django,visualstudio,visualstudiocode,python,firebase
+
+### Project template
+cride/media/
+.pytest_cache/
+.ipython/
+# Environment
+.env
+.envs/*
+!.envs/.local/
