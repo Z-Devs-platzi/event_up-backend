@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.7-alpine
 
 ENV PYTHONUNBUFFERED 1
 
@@ -17,7 +17,10 @@ RUN apk update \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install -r /requirements/local.txt
+RUN pip install --no-cache-dir -r /requirements/local.txt
+
+# Fix Celery
+RUN sh /requirements/celery.sh
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
