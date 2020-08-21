@@ -28,7 +28,7 @@ class GeneralModel(models.Model):
     class Meta:
         """Meta option."""
         # Allow in al models/contrlores/etc...
-        asbtract = True
+        abstract = True
         # Config
         get_latest_by = 'created'
         ordering = ['-created', '-modified']
