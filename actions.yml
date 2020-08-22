@@ -8,15 +8,15 @@ services:
   django: &django
     build:
       context: .
-      dockerfile: ../compose/local/django/Dockerfile
+      dockerfile: ./compose/local/django/Dockerfile
     image: urevent_local_django
     depends_on:
       - postgres
     volumes:
       - .:/app
     env_file:
-      -  ../.envs/.actions/.django
-      - ../.envs/.actions/.postgres
+      - ./.envs/.actions/.django
+      - ./.envs/.actions/.postgres
     ports:
       - "8000:8000"
     command: /start
@@ -24,13 +24,13 @@ services:
   postgres:
     build:
       context: .
-      dockerfile: ../compose/production/postgres/Dockerfile
+      dockerfile: ./compose/production/postgres/Dockerfile
     image: urevent_production_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
     env_file:
-      - ../.envs/.actions/.postgres
+      - ./.envs/.actions/.postgres
 
   redis:
     image: redis:6.0.6
