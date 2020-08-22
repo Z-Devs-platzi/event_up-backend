@@ -585,6 +585,4 @@ urevent/media/
 .pytest_cache/
 .ipython/
 # Environment
-.env
 .envs/*
-!.envs/.local/
