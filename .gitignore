@@ -581,7 +581,7 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/django,visualstudio,visualstudiocode,python,firebase
 
 ### Project template
-cride/media/
+urevent/media/
 .pytest_cache/
 .ipython/
 # Environment
