@@ -15,7 +15,7 @@ class Profile(GeneralModel):
     """
 
     # Extend data from User table
-    users = models.OneToOneField('users.User', on_delete=models.CASCADE)
+    users = models.OneToOneField('users.Users', on_delete=models.CASCADE)
 
     # Fields
     biography = models.TextField(max_length=500, blank=True)

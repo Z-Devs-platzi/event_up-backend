@@ -9,7 +9,7 @@ from django.core.validators import RegexValidator
 from urevent.utils.models import GeneralModel
 
 
-class User(GeneralModel, AbstractUser):
+class Users(GeneralModel, AbstractUser):
     """User model
 
     Extend from Django's Abstract User, change and add data to your event app - C3 <Z-Devs>
