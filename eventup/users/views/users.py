@@ -46,7 +46,7 @@ class AccountVerificationAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         """Handle HTTP POST request."""
-        serializer = AccountVerificationSerializer(data=request.data)
+        serializer = AccountVerificationSerializer(data=request.GET['code'])
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = {'message': 'Congratulation, now go share some rides!'}
