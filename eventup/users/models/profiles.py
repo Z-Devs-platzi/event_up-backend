@@ -24,7 +24,7 @@ class Profile(GeneralModel):
     )
     biography = models.TextField(max_length=500, blank=True)
 
-    # Stats
+    # Stats
     rides_taken = models.PositiveIntegerField(default=0)
     rides_offered = models.PositiveIntegerField(default=0)
     reputation = models.FloatField(
@@ -35,4 +35,3 @@ class Profile(GeneralModel):
     def __str__(self):
         """Return user's str representation."""
         return str(self.user)
-
