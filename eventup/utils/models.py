@@ -5,7 +5,7 @@ from django.db import models
 
 
 class GeneralModel(models.Model):
-    """Comparte Ride base model.
+    """Event Up base model.
     GeneralModel acts as an abstract base class from which every
     other model in the project will inherit. This class provides
     every table with the following attributes:
