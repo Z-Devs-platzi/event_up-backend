@@ -11,11 +11,12 @@ from eventup.users.models import Users
 # from eventup.rides.models import Ride
 
 # Celery
-from celery.decorators import task, periodic_task
+from celery.decorators import task
+# from celery.decorators import task, periodic_task
 
 # Utilities
 import jwt
-import time
+# import time
 from datetime import timedelta
 
 

@@ -40,6 +40,7 @@ class UserSignUpAPIView(APIView):
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
 
+
 class AccountVerificationAPIView(APIView):
     """Account verification API view."""
 

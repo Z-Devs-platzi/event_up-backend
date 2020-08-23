@@ -1,11 +1,11 @@
 """User model."""
 
-# Django
+# Django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
-# Utilities
+# Utilities
 from eventup.utils.models import GeneralModel
 
 
@@ -47,7 +47,8 @@ class Users(GeneralModel, AbstractUser):
     )
 
     # Reset data - Model Abstract User
-    USERNAME_FIELD = 'email' # main
+    # Main Object
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     # ABS Functions

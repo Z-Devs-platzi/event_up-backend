@@ -22,6 +22,7 @@ from eventup.users.serializers.profiles import ProfileModelSerializer
 # Utilities
 import jwt
 
+
 class UserModelSerializer(serializers.ModelSerializer):
     """User model serializer."""
     profile = ProfileModelSerializer(read_only=True)

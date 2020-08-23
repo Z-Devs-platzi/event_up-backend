@@ -1,2 +1,2 @@
-from .users import Users
-from .profiles import Profile
+from .users import Users # noqa
+from .profiles import Profile # noqa
