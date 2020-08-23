@@ -1,11 +1,11 @@
-"""Users app"""
+"""Users app."""
 
-# Django library
+# Django
 from django.apps import AppConfig
 
-class UsersAppConfig(AppConfig):
-    """Users app config"""
 
-    # Module
+class UsersAppConfig(AppConfig):
+    """Users app config."""
+
     name = 'urevent.users'
     verbose_name = 'Users'
