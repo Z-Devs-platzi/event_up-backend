@@ -1,26 +1,26 @@
-"""User model"""
+"""User model."""
 
-# Django
+# Django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
-# Utilities
+# Utilities
 from urevent.utils.models import GeneralModel
 
 
 class Users(GeneralModel, AbstractUser):
-    """User model
+    """User model.
 
-    Extend from Django's Abstract User, change and add data to your event app - C3 <Z-Devs>
+    Extend from Django's Abstract User, change the username field
+    to email and add some extra fields.
     """
 
-    # Fields
     email = models.EmailField(
         'email address',
         unique=True,
         error_messages={
-            'unique': 'This email already exist in the database'
+            'unique': 'A user with that email already exists.'
         }
     )
 
@@ -30,26 +30,24 @@ class Users(GeneralModel, AbstractUser):
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
     is_client = models.BooleanField(
-        'client status',
-        default=False,
+        'client',
+        default=True,
         help_text=(
             'Help easily distinguish users and perform queries. '
             'Clients are the main type of user.'
         )
     )
 
-    is_verfied = models.BooleanField(
+    is_verified = models.BooleanField(
         'verified',
-        default=False,
+        default=True,
         help_text='Set to true when the user have verified its email address.'
     )
 
-    # Reset data - Model Abstract User
-    USERNAME_FIELD = 'email' # main
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
-
-    # ABS Functions
     def __str__(self):
         """Return username."""
         return self.username
