@@ -6,7 +6,6 @@ from django.db import models
 # Utilities
 from urevent.utils.models import GeneralModel
 
-
 class Profile(GeneralModel):
     """Profile model.
 
