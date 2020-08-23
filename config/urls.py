@@ -10,6 +10,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 
     # API - Urls
-    path('', include(('urevent.users.urls', 'users'), namespace='users')),
+    path('', include(('eventup.users.urls', 'users'), namespace='users')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

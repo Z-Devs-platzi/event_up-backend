@@ -4,7 +4,7 @@
 from django.urls import path
 
 # Views
-from urevent.users.views import (
+from eventup.users.views import (
     UserLoginAPIView,
     UserSignUpAPIView
 )

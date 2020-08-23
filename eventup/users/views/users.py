@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Serializers
-from urevent.users.serializers import (
+from eventup.users.serializers import (
     UserLoginSerializer,
     UserModelSerializer,
     UserSignUpSerializer

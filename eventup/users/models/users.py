@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
 # Utilities
-from urevent.utils.models import GeneralModel
+from eventup.utils.models import GeneralModel
 
 
 class Users(GeneralModel, AbstractUser):
