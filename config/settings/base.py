@@ -128,6 +128,13 @@ TEMPLATES = [
     },
 ]
 
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+
 # Security
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
@@ -140,7 +147,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # Admin
 ADMIN_URL = 'admin/'
 ADMINS = [
-    ("""Pablo Trinidad""", 'pablotrinidad@ciencias.unam.mx'),
+    ("""Miguel Angel Torres Vargas""", 'ingeniero.miguelvargas@gmail.com'),
 ]
 MANAGERS = ADMINS
 
