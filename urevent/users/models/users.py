@@ -12,10 +12,11 @@ from urevent.utils.models import GeneralModel
 class Users(GeneralModel, AbstractUser):
     """User model.
 
-    Extend from Django's Abstract User, change the username field
-    to email and add some extra fields.
+
+    Extend from Django's Abstract User, change and add data to your event app - C3 <Z-Devs>
     """
 
+    # Fields
     email = models.EmailField(
         'email address',
         unique=True,
@@ -30,9 +31,6 @@ class Users(GeneralModel, AbstractUser):
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
-
     is_client = models.BooleanField(
         'client',
         default=True,
@@ -44,10 +42,15 @@ class Users(GeneralModel, AbstractUser):
 
     is_verified = models.BooleanField(
         'verified',
-        default=True,
+        default=False,
         help_text='Set to true when the user have verified its email address.'
     )
 
+    # Reset data - Model Abstract User
+    USERNAME_FIELD = 'email' # main
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    # ABS Functions
     def __str__(self):
         """Return username."""
         return self.username
