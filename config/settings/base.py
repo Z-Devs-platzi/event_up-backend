@@ -3,7 +3,7 @@
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3
-APPS_DIR = ROOT_DIR.path('urevent')
+APPS_DIR = ROOT_DIR.path('eventup')
 
 env = environ.Env()
 
@@ -11,7 +11,7 @@ env = environ.Env()
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
 # Language and timezone
-TIME_ZONE = 'America/Mexico_City'
+TIME_ZONE = 'America/Bogota'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
@@ -44,10 +44,14 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
+
 LOCAL_APPS = [
-    'urevent.users.app.UsersAppConfig'
+    'eventup.users.apps.UsersAppConfig',
 ]
+
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # Passwords
@@ -126,6 +130,13 @@ TEMPLATES = [
     },
 ]
 
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+
 # Security
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
@@ -138,12 +149,12 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # Admin
 ADMIN_URL = 'admin/'
 ADMINS = [
-    ("""Pablo Trinidad""", 'pablotrinidad@ciencias.unam.mx'),
+    ("""Miguel Angel Torres Vargas""", 'ingeniero.miguelvargas@gmail.com'),
 ]
 MANAGERS = ADMINS
 
 # Celery
-INSTALLED_APPS += ['urevent.taskapp.celery.CeleryAppConfig']
+INSTALLED_APPS += ['eventup.taskapp.celery.CeleryAppConfig']
 if USE_TZ:
     CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')

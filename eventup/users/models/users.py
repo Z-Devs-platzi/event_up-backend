@@ -1,16 +1,17 @@
-"""User model"""
+"""User model."""
 
-# Django
+# Django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
-# Utilities
-from urevent.utils.models import GeneralModel
+# Utilities
+from eventup.utils.models import GeneralModel
 
 
 class Users(GeneralModel, AbstractUser):
-    """User model
+    """User model.
+
 
     Extend from Django's Abstract User, change and add data to your event app - C3 <Z-Devs>
     """
@@ -20,7 +21,7 @@ class Users(GeneralModel, AbstractUser):
         'email address',
         unique=True,
         error_messages={
-            'unique': 'This email already exist in the database'
+            'unique': 'A user with that email already exists.'
         }
     )
 
@@ -31,15 +32,15 @@ class Users(GeneralModel, AbstractUser):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
     is_client = models.BooleanField(
-        'client status',
-        default=False,
+        'client',
+        default=True,
         help_text=(
             'Help easily distinguish users and perform queries. '
             'Clients are the main type of user.'
         )
     )
 
-    is_verfied = models.BooleanField(
+    is_verified = models.BooleanField(
         'verified',
         default=False,
         help_text='Set to true when the user have verified its email address.'

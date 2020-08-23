@@ -5,4 +5,4 @@ set -o pipefail
 set -o nounset
 
 
-celery -A urevent.taskapp worker -l INFO
+celery -A eventup.taskapp worker -l INFO
