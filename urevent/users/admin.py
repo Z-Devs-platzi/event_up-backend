@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Models
-from urevent.users.models import Users, Profile
+from eventup.users.models import Users, Profile
 
 
 class CustomUserAdmin(UserAdmin):

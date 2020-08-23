@@ -5,4 +5,4 @@ set -o nounset
 
 
 rm -f './celerybeat.pid'
-celery -A urevent.taskapp beat -l INFO
+celery -A eventup.taskapp beat -l INFO

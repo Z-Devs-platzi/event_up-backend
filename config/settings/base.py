@@ -3,7 +3,7 @@
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3
-APPS_DIR = ROOT_DIR.path('urevent')
+APPS_DIR = ROOT_DIR.path('eventup')
 
 env = environ.Env()
 
@@ -49,7 +49,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'urevent.users.apps.UsersAppConfig',
+    'eventup.users.apps.UsersAppConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -154,7 +154,7 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # Celery
-INSTALLED_APPS += ['urevent.taskapp.celery.CeleryAppConfig']
+INSTALLED_APPS += ['eventup.taskapp.celery.CeleryAppConfig']
 if USE_TZ:
     CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')

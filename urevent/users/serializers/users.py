@@ -10,7 +10,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
 # Models
-from urevent.users.models import Users, Profile
+from eventup.users.models import Users, Profile
 
 
 class UserModelSerializer(serializers.ModelSerializer):
