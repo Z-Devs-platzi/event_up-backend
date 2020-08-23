@@ -33,6 +33,6 @@ EMAIL_PORT = 1025
 # django-extensions
 INSTALLED_APPS += ['django_extensions']  # noqa F405
 
-# Celery
+# Celery - If this const are in TRUE don't run the task in celery but if are False (Celery run "async")
 CELERY_TASK_ALWAYS_EAGER = True
 CELERY_TASK_EAGER_PROPAGATES = True
