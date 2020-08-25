@@ -590,3 +590,5 @@ eventup/media/
 # Migrations
 eventup/events/migrations/
 eventup/users/migrations/
+
+commands
