@@ -121,6 +121,7 @@ class AccountVerificationSerializer(serializers.Serializer):
 
     def validate_token(self, data):
         """Verify token is valid."""
+        print(data, settings.SECRET_KEY)
         try:
             payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
