@@ -4,7 +4,7 @@
 from django.contrib import admin
 
 # Models
-from eventup.events.models import Event, Sponsor, Expositor
+from eventup.events.models import Event, Sponsor, Expositor, Schedule
 
 
 @admin.register(Event)
@@ -31,3 +31,9 @@ class ExpositorAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'twitter')
     search_fields = ('first_name', 'last_name')
     list_filter = ('first_name', 'last_name')
+
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+    ''' Schedule model admin '''
+    list_display = ('date',)
