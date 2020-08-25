@@ -588,4 +588,5 @@ eventup/media/
 .envs/
 
 # Migrations
-migrations/
+eventup/events/migrations/
+eventup/users/migrations/
