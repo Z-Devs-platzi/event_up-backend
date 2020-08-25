@@ -17,6 +17,6 @@ jobs:
         name: 'Check Codecov'
         token: '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
     - name: Check Codecov
-      run: bash <(curl -s https://codecov.io/bash)
+      run: bash <(curl -s https://codecov.io/bash) -t '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
     - name: Build the Docker image
       run: docker-compose -f ./actions.yml build
