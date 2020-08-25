@@ -18,6 +18,16 @@ class Event(models.Model):
     banner = models.URLField()
     logo = models.URLField()
 
+    STATUS_CHOICES = [
+        ('active', 'active'),
+        ('inactive', 'inactive'),
+    ]
+    status = models.CharField(
+        choices=STATUS_CHOICES,
+        null=False,
+        default="active"
+    )
+
     # Modify
     created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True)
