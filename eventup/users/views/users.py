@@ -54,5 +54,4 @@ class UserViewSet(viewsets.GenericViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             message = 'Congratulation, now go share some rides!'
-
         return Response({'message': message} , status=status.HTTP_200_OK)
