@@ -3,7 +3,7 @@
 from django.apps import AppConfig
 
 
-class EventAppConfif(AppConfig):
+class EventAppConfig(AppConfig):
     """ Event app config."""
 
     name = "eventup.events"
