@@ -17,4 +17,8 @@ class Expositor(models.Model):
     twitter = models.URLField()
     profile_picture = models.URLField()
 
+    # Modify
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
     # Expositors Relations

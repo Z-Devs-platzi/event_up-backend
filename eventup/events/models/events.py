@@ -18,4 +18,8 @@ class Event(models.Model):
     banner = models.URLField()
     logo = models.URLField()
 
+    # Modify
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
     # Event Relations
