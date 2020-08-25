@@ -19,7 +19,7 @@ class Event(models.Model):
     logo = models.URLField()
 
     # Modify
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True)
 
     # Event Relations

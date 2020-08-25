@@ -9,5 +9,5 @@ class Schedule(models.Model):
     hour = models.TimeField()
 
     # Modify
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True)

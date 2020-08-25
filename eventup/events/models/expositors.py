@@ -18,7 +18,7 @@ class Expositor(models.Model):
     profile_picture = models.URLField()
 
     # Modify
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True)
 
     # Expositors Relations
