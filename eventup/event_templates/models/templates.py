@@ -15,6 +15,6 @@ class Template(GeneralModel):
     font = models.CharField(max_length=100, blank=True)
 
     # Templates Relations
-    layout_id = models.ManyToManyField(
+    layout_id = models.OneToOneField(
         to="Layout"
     )
