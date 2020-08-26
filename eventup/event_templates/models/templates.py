@@ -16,5 +16,6 @@ class Template(GeneralModel):
 
     # Templates Relations
     layout_id = models.OneToOneField(
-        to="Layout"
+        to="Layout",
+        on_delete=models.CASCADE,
     )
