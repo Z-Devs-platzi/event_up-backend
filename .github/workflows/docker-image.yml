@@ -1,14 +1,17 @@
-name: CI
+name: Docker Image CI
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
   pull_request:
-    branches: [master, develop]
-    
+    branches: [ master ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Build the Docker image
       run: docker-compose -f ./actions.yml build
+    - name: Check Code
+      run: docker-compose run --rm django flake8
+  
