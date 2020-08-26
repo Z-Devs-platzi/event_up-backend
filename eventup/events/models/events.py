@@ -3,6 +3,9 @@
 import uuid
 from django.db import models
 
+# Local models
+from .sponsors import Sponsor
+
 
 class Event(models.Model):
     ''' Event Model '''
@@ -34,6 +37,12 @@ class Event(models.Model):
     deleted = models.DateTimeField(null=True)
 
     # Event Relations
+
+    sponsor = models.ForeignKey(
+        to="Sponsor",
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
     def __str__(self):
         return str(self.name)
