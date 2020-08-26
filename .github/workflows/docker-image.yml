@@ -7,20 +7,13 @@ on:
     branches: [master, develop]
     
 jobs:
-  clean:
-    runs-on: ubuntu-latest
-    steps:
-      - name: clean code
-        run: docker-compose run --rm django flake8
-
-      - name: Build the Docker image
-        run: docker-compose -f ./actions.yml build
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1.1.0
+    - uses: whoan/docker-build-with-cache-action@v5
       with:
-        path: ./actions.yml
-        cache_froms: eventup_local_django, eventup_production_postgres, eventup_local_celeryworker, eventup_local_celerybeat, eventup_local_flower
+        username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        session:  "${{ secrets.AWS_SESSION_TOKEN }}"  # if you need role assumption
+        registry: 861729690598.dkr.ecr.us-west-1.amazonaws.com
+        image_name: backend
