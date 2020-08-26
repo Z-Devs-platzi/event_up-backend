@@ -10,10 +10,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: whoan/docker-build-with-cache-action@v5
-      with:
-        username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-        password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        session:  "${{ secrets.AWS_SESSION_TOKEN }}"  # if you need role assumption
-        registry: ec2-35-170-182-134.compute-1.amazonaws.com
-        image_name: backend
+    - name: Build the Docker image
+      run: docker-compose -f ./actions.yml build
