@@ -6,5 +6,5 @@ from django.apps import AppConfig
 class TemplateAppConfig(AppConfig):
     """ Template app config """
 
-    name = "eventup.events_template"
+    name = "eventup.event_templates"
     verbose_name = "template"
