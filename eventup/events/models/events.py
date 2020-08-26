@@ -15,12 +15,12 @@ class Event(GeneralModel):
     # Event data
     name = models.CharField(max_length=100, unique=True)
     date = models.DateField()
-    hour = models.TimeField()
+    hour = models.TimeField(null=True, blank=True)
     description = models.TextField()
     url = models.URLField()
     banner = models.URLField()
     logo = models.URLField()
-    code = models.CharField(max_length=100, unique=True)
+    code = models.CharField(max_length=100, unique=True, default='0000')
 
     # Event Relations
     sponsor = models.ManyToManyField(

@@ -9,9 +9,9 @@ from eventup.utils.models import GeneralModel
 class Schedule(GeneralModel):
 
     # Schedule data
-    title = models.CharField(max_length=300)
+    title = models.CharField(max_length=300, blank=True)
     date = models.DateField()
-    hour = models.TimeField()
+    hour = models.TimeField(null=True, blank=True)
 
     # Relations
     expositors = models.ManyToManyField(
