@@ -10,13 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Codecov
-      uses: codecov/codecov-action@v1.0.13
-      with:
-        name: 'Check Codecov'
-        token: '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
-    - name: Check Codecov
-      run: bash <(curl -s https://codecov.io/bash) -t '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
     - name: Build the Docker image
-      run: docker-compose -f ./actions.yml build
+      run: docker-compose -f ${{github.workspace}}/actions.yml build
+    - name: Check Code
+      run: docker-compose run --rm django flake8
+
