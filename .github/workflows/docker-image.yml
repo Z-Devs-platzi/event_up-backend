@@ -15,5 +15,5 @@ jobs:
         username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         session:  "${{ secrets.AWS_SESSION_TOKEN }}"  # if you need role assumption
-        registry: 861729690598.dkr.ecr.us-west-1.amazonaws.com
+        registry: ec2-35-170-182-134.compute-1.amazonaws.com
         image_name: backend
