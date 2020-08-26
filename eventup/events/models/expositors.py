@@ -23,6 +23,7 @@ class Expositor(models.Model):
     ]
     status = models.CharField(
         choices=STATUS_CHOICES,
+        max_length=15,
         null=False,
         default="active"
     )
