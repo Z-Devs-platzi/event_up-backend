@@ -34,3 +34,6 @@ class Event(models.Model):
     deleted = models.DateTimeField(null=True)
 
     # Event Relations
+
+    def __str__(self):
+        return str(self.name)
