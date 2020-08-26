@@ -2,31 +2,14 @@
 
 from django.db import models
 
+# Utils Model
+from eventup.utils.models import GeneralModel
 
-class Schedule(models.Model):
+
+class Schedule(GeneralModel):
 
     date = models.DateField()
-    hour = models.TimeField()
-
-    STATUS_CHOICES = [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-    ]
-    status = models.CharField(
-        choices=STATUS_CHOICES,
-        max_length=15,
-        null=False,
-        default="active"
-    )
 
     expositors = models.ManyToManyField(
         to="Expositor"
     )
-
-    # Modify
-    created = models.DateTimeField(auto_now=True)
-    modified = models.DateTimeField(auto_now=True, null=True)
-    deleted = models.DateTimeField(null=True)
-
-    def __str__(self):
-        return self.expositors

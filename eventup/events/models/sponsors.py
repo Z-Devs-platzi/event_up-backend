@@ -2,29 +2,16 @@
 
 from django.db import models
 
+# Utils Model
+from eventup.utils.models import GeneralModel
 
-class Sponsor(models.Model):
+
+class Sponsor(GeneralModel):
     ''' Sponsors Model '''
 
     name = models.CharField(max_length=100)
     level = models.CharField(max_length=100)
     logo = models.CharField(max_length=300)
-
-    STATUS_CHOICES = [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-    ]
-    status = models.CharField(
-        choices=STATUS_CHOICES,
-        max_length=15,
-        null=False,
-        default="active"
-    )
-
-    # Modify
-    created = models.DateTimeField(auto_now=True)
-    modified = models.DateTimeField(auto_now=True, null=True)
-    deleted = models.DateTimeField(null=True)
 
     def __str__(self):
         return str(self.name)

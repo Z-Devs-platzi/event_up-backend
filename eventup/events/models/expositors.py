@@ -3,8 +3,11 @@
 import uuid
 from django.db import models
 
+# Utils Model
+from eventup.utils.models import GeneralModel
 
-class Expositor(models.Model):
+
+class Expositor(GeneralModel):
     ''' Expositor Model '''
 
     # Id
@@ -16,22 +19,6 @@ class Expositor(models.Model):
     bio = models.TextField()
     twitter = models.URLField()
     image = models.URLField()
-
-    STATUS_CHOICES = [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-    ]
-    status = models.CharField(
-        choices=STATUS_CHOICES,
-        max_length=15,
-        null=False,
-        default="active"
-    )
-
-    # Modify
-    created = models.DateTimeField(auto_now=True)
-    modified = models.DateTimeField(auto_now=True, null=True)
-    deleted = models.DateTimeField(null=True)
 
     # Expositors Relations
 

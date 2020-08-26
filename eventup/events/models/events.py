@@ -3,8 +3,11 @@
 import uuid
 from django.db import models
 
+# Utils Model
+from eventup.utils.models import GeneralModel
 
-class Event(models.Model):
+
+class Event(GeneralModel):
     ''' Event Model '''
     # Id
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -17,22 +20,6 @@ class Event(models.Model):
     url = models.URLField()
     banner = models.URLField()
     logo = models.URLField()
-
-    STATUS_CHOICES = [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-    ]
-    status = models.CharField(
-        choices=STATUS_CHOICES,
-        max_length=15,
-        null=False,
-        default="active"
-    )
-
-    # Modify
-    created = models.DateTimeField(auto_now=True)
-    modified = models.DateTimeField(auto_now=True, null=True)
-    deleted = models.DateTimeField(null=True)
 
     # Event Relations
     sponsor = models.ManyToManyField(
