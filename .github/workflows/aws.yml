@@ -1,8 +1,10 @@
 on:
   release:
     types: [created]
+  push:
+    branches: [ master ]
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon EC2
 
 jobs:
   deploy:
@@ -11,7 +13,7 @@ jobs:
 
     steps:
     - name: Create File
-      run:  dummy.pem << ${{ secrets.AWS_SUPER_KEY }}
+      run:  dummy.pem << "${{ secrets.AWS_SUPER_KEY }}"
     - name: Add Permissions
       run:  chmod 400 dummy.pem
     - name: Call File
