@@ -586,3 +586,9 @@ eventup/media/
 .ipython/
 # Environment
 .envs/
+
+# Migrations
+eventup/events/migrations/
+eventup/users/migrations/
+
+commands
