@@ -16,7 +16,7 @@ jobs:
       uses: docker/build-push-action@v1.1.0
       with:
         # Path to the build context
-        path: './actions.yml'
+        path: ./actions.yml
         # Sets the target stage to build
         #target: # optional
         # Always attempt to pull a newer version of the image
