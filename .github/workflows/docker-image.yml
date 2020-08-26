@@ -1,22 +1,32 @@
-name: Docker Image CI
+name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
-
+    branches: [master, develop]
+    
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Codecov
-      uses: codecov/codecov-action@v1.0.13
-      with:
-        name: 'Check Codecov'
-        token: '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
-    - name: Check Codecov
-      run: bash <(curl -s https://codecov.io/bash) -t '568d9cd5-c2d6-432d-8584-0cb632feb7f0'
-    - name: Build the Docker image
-      run: docker-compose -f ./actions.yml build
+      
+      # Build
+      - name: Build docker images using cache
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          image_name: 'Build-Docker-Image'
+          dockerfile: ./actions.yml
+          # build_extra_args: # optional
+            
+      # ADD Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+      
+      # Save 
+      - name: Docker Lint
+        uses: luke142367/Docker-Lint-Action@v1.1.1
+        with:
+          target: build-docker
+          run: docker-compose run --rm django flake8
+  
