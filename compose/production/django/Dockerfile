@@ -1,4 +1,5 @@
-FROM python:3.8
+# FROM python:3.8
+FROM python:3.7-alpine
 
 ENV PYTHONUNBUFFERED 1
 
@@ -16,8 +17,13 @@ RUN addgroup -S django \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install --no-cache-dir -r /requirements/production.txt \
-    && rm -rf /requirements
+RUN pip install --no-cache-dir -r /requirements/production.txt
+
+# Fix Celery
+RUN sh /requirements/celery.sh
+
+# Remove Config Dependencies
+RUN rm -rf /requirements
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
@@ -44,6 +50,9 @@ RUN sed -i 's/\r//' /start-flower
 RUN chmod +x /start-flower
 
 COPY . /app
+
+# Fix Folder Static
+run mkdir -p /app/eventup/static
 
 RUN chown -R django /app
 
