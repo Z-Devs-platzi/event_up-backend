@@ -17,3 +17,6 @@ class Schedule(GeneralModel):
     expositors = models.ManyToManyField(
         to="Expositor"
     )
+
+    def __str__(self):
+        return str(self.title)
