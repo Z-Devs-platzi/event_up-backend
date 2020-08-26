@@ -33,3 +33,6 @@ class Expositor(models.Model):
     deleted = models.DateTimeField(null=True)
 
     # Expositors Relations
+
+    def __str__(self):
+        return str(self.first_name)
