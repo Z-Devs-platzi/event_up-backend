@@ -1,10 +1,10 @@
-""" Events App. """
+""" Community App. """
 
 from django.apps import AppConfig
 
 
-class EventAppConfig(AppConfig):
+class CommunityAppConfig(AppConfig):
     """ Event app config."""
 
-    name = "eventup.events"
-    verbose_name = "events"
+    name = "eventup.communities"
+    verbose_name = "communities"
