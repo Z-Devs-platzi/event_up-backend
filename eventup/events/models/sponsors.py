@@ -22,4 +22,5 @@ class Sponsor(models.Model):
 
     # Modify
     created = models.DateTimeField(auto_now=True)
-    modified = models.DateTimeField(auto_now=True)
+    modified = models.DateTimeField(auto_now=True, null=True)
+    deleted = models.DateTimeField(null=True)
