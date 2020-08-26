@@ -23,6 +23,11 @@ class Event(GeneralModel):
     code = models.CharField(max_length=100, unique=True, default='0000')
 
     # Event Relations
+    template = models.ForeignKey(
+        to="event_templates.Template",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
     sponsor = models.ManyToManyField(
         to="Sponsor",
     )
