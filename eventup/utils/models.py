@@ -14,6 +14,17 @@ class GeneralModel(models.Model):
         + modified (DateTime): Store the last datetime the object was modified.
     """
 
+    STATUS_CHOICES = [
+        ('active', 'active'),
+        ('inactive', 'inactive'),
+    ]
+    status = models.CharField(
+        choices=STATUS_CHOICES,
+        max_length=15,
+        null=False,
+        default="active"
+    )
+
     created = models.DateTimeField(
         'created at',
         auto_now_add=True,
@@ -23,6 +34,11 @@ class GeneralModel(models.Model):
         'modified at',
         auto_now=True,
         help_text='Date time on which the object was last modified.'
+    )
+    deleted = models.DateTimeField(
+        'deleted at',
+        auto_now=True,
+        help_text='Date time on which the object was delete.'
     )
 
     class Meta:
