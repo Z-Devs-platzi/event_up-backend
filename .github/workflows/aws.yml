@@ -1,8 +1,10 @@
 on:
   release:
     types: [created]
+  push:
+    branches: [ master ]
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon EC2
 
 jobs:
   deploy:
