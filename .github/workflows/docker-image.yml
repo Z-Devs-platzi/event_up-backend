@@ -10,23 +10,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      
-      # Build
-      - name: Build docker images using cache
-        uses: whoan/docker-build-with-cache-action@v5
-        with:
-          image_name: 'Build-Docker-Image'
-          dockerfile: ../../../actions.yml
-          # build_extra_args: # optional
-            
-      # ADD Codecov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-      
-      # Save 
-      - name: Docker Lint
-        uses: luke142367/Docker-Lint-Action@v1.1.1
-        with:
-          target: build-docker
-          run: docker-compose run --rm django flake8
-  
+    - name: Build and push Docker images
+      # You may pin to the exact commit or the version.
+      # uses: docker/build-push-action@92e71463491f2d026a477188b8ad3a0fdd9d672c
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Path to the build context
+        path: '{path}/actions.yml'
+        # Sets the target stage to build
+        #target: # optional
+        # Always attempt to pull a newer version of the image
+        #always_pull: # optional
+        # Comma-delimited list of build-time variables
+        #build_args: # optional
+        # Comma-delimited list of images to consider as cache sources
+        #cache_froms: # optional
+        # Comma-delimited list of labels to add to the built image
