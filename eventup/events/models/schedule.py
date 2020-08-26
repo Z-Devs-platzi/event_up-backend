@@ -27,3 +27,6 @@ class Schedule(models.Model):
     created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True, null=True)
     deleted = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.expositors
