@@ -13,7 +13,9 @@ jobs:
 
     steps:
     - name: Create File
-      run :  sh -c 'echo ${{ secrets.AWS_SUPER_KEY }} >> dummy.pem'
+      run : echo "${{ secrets.AWS_SUPER_KEY }}" >> dummy.pem
+    - name: List file
+      run : cat dummy.pem && ls -al
     - name: Add Permissions
       run:  chmod 400 dummy.pem
     - name: Call File
