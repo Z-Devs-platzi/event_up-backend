@@ -7,7 +7,11 @@ on:
     branches: [master, develop]
     
 jobs:
-  :
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: list elements
+        run: ls -alhr
      
   build:
     runs-on: ubuntu-latest
