@@ -19,6 +19,10 @@ class Schedule(models.Model):
         default="active"
     )
 
+    expositors = models.ManyToManyField(
+        to="Expositor"
+    )
+
     # Modify
     created = models.DateTimeField(auto_now=True)
     modified = models.DateTimeField(auto_now=True, null=True)
