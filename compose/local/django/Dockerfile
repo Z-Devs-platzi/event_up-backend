@@ -20,7 +20,8 @@ COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/local.txt
 
 # Fix Celery
-RUN sh /requirements/celery.sh
+COPY ./config/scripts /scripts
+RUN sh /scripts/celery.sh
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
