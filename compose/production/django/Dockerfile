@@ -1,4 +1,5 @@
-FROM python:3.8
+# FROM python:3.8
+FROM python:3.7-alpine
 
 ENV PYTHONUNBUFFERED 1
 
@@ -18,6 +19,11 @@ RUN addgroup -S django \
 COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
+
+# Fix Celery
+COPY ./config/scripts/deploy.sh /
+COPY ./config/scripts /scripts
+RUN sh /scripts/celery.sh
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint
@@ -44,6 +50,9 @@ RUN sed -i 's/\r//' /start-flower
 RUN chmod +x /start-flower
 
 COPY . /app
+
+# Fix Folder Static
+run mkdir -p /app/eventup/static
 
 RUN chown -R django /app
 

@@ -7,12 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker-compose -f ./actions.yml build
+      run: docker-compose -f ${{github.workspace}}/actions.yml build
+    - name: Check Code
+      run: docker-compose run --rm django flake8
+

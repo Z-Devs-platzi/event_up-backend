@@ -1,0 +1,22 @@
+on:
+  release:
+    types: [created]
+  push:
+    branches: [ master ]
+
+name: Deploy to Amazon EC2
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Create File
+      run : echo "${{ secrets.AWS_SUPER_KEY }}" >> dummy.pem
+    - name: List file
+      run : cat dummy.pem && ls -al
+    - name: Add Permissions
+      run:  chmod 400 dummy.pem
+    - name: Call File
+      run:  ssh -i dummy.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} /home/${{ secrets.AWS_PATH }}
