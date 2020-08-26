@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
 # Fix Celery
+COPY ./config/scripts/deploy.sh /
 COPY ./config/scripts /scripts
 RUN sh /scripts/celery.sh
 

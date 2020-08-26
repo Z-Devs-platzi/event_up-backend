@@ -20,6 +20,7 @@ COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/local.txt
 
 # Fix Celery
+COPY ./config/scripts/deploy.sh /
 COPY ./config/scripts /scripts
 RUN sh /scripts/celery.sh
 
