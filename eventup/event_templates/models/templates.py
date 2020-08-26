@@ -15,7 +15,8 @@ class Template(GeneralModel):
     font = models.CharField(max_length=100, blank=True)
 
     # Templates Relations
-    layout_id = models.OneToOneField(
+    layout_id = models.ForeignKey(
         to="Layout",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        null=True,
     )
