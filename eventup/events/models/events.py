@@ -20,16 +20,15 @@ class Event(GeneralModel):
     url = models.URLField()
     banner = models.URLField()
     logo = models.URLField()
+    code = models.CharField(max_length=100, unique=True)
 
     # Event Relations
     sponsor = models.ManyToManyField(
         to="Sponsor",
     )
 
-    schedule = models.OneToOneField(
+    schedule = models.ManyToManyField(
         to="Schedule",
-        on_delete=models.SET_NULL,
-        null=True,
     )
 
     def __str__(self):
