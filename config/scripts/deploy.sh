@@ -4,19 +4,21 @@
 # Flags: sh deploy.sh update/clean
 
 # Config elements
+PROJECT='eventup'
 COMMAND=$1
 
-# Update all
-if [ -n "$COMMAND" && $COMMAND = 'update' ]; then
-    sudo apt-get update -y && sudo apt-get upgrade -y
-fi
+BASE_NAME=`basename $0`
+BASE_PATH=$(dirname $(readlink -f $0))
+BASE_PATH_NAME="$BASE_PATH/$BASE_NAME"
+
+echo "Script path with name: $BASE_PATH_NAME"
+
 
 # Inside the project
-cd /home/ubuntu/backend/
 export COMPOSE_FILE=production.yml
 
 # Stop Services
-sudo supervisorctl stop eventup
+sudo supervisorctl stop $PROJECT
 sudo docker-compose down
 
 # Remove all
@@ -43,4 +45,4 @@ if [ -n "$COMMAND" && "$COMMAND" = 'clean' ]; then
 fi
 
 # Up new services and Active auto services
-sudo docker-compose up --force-recreate -d && sudo supervisorctl start eventup && sudo supervisorctl restart all
+sudo docker-compose up --force-recreate -d && sudo supervisorctl start $PROJECT && sudo supervisorctl restart all
