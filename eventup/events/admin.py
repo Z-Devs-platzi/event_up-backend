@@ -28,7 +28,7 @@ class SponsorsAdmin(admin.ModelAdmin):
 @admin.register(Expositor)
 class ExpositorAdmin(admin.ModelAdmin):
     ''' Expositor model admin '''
-    list_display = ('first_name', 'last_name', 'twitter')
+    list_display = ('name', 'twitter')
     search_fields = ('first_name', 'last_name')
     list_filter = ('first_name', 'last_name')
 

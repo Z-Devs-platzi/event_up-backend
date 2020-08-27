@@ -14,8 +14,7 @@ class Expositor(GeneralModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Expositor data
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     bio = models.TextField()
     twitter = models.URLField()
     image = models.URLField()
@@ -23,4 +22,4 @@ class Expositor(GeneralModel):
     # Expositors Relations
 
     def __str__(self):
-        return str(self.first_name)
+        return str(self.name)
