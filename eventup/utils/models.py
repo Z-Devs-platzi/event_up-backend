@@ -10,19 +10,23 @@ class GeneralModel(models.Model):
     other model in the project will inherit. This class provides
     every table with the following attributes:
 
-        + created (DateTime): Store the datetime the object was created.
-        + modified (DateTime): Store the last datetime the object was modified.
+        + status (ENUM): System status value of object
+        + created (DateTime): System the datetime the object was created.
+        + modified (DateTime): System the last datetime the object was modified.
+        + deleted (DateTime): System the last datetime the object was deleted.
     """
 
-    STATUS_CHOICES = [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-    ]
+    STATUS_CHOICES = (
+        ('active', ('Active element')),
+        ('inactive', ('Inactive element')),
+    )
+
     status = models.CharField(
+        'status',
+        max_length=32,
         choices=STATUS_CHOICES,
-        max_length=15,
-        null=False,
-        default="active"
+        default='active',
+        help_text='Status of the object base.'
     )
 
     created = models.DateTimeField(
@@ -47,4 +51,4 @@ class GeneralModel(models.Model):
         abstract = True
         # Config
         get_latest_by = 'created'
-        ordering = ['-created', '-modified']
+        ordering = ['-status', '-created', '-modified', '-deleted']
