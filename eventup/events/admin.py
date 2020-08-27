@@ -11,9 +11,9 @@ from eventup.events.models import Event, Sponsor, Expositor, Schedule
 class EventAdmin(admin.ModelAdmin):
     ''' Event model admin '''
 
-    list_display = ('name', 'date', 'hour', 'url')
+    list_display = ('name', 'date', 'url')
     search_fields = ('name',)
-    list_filter = ('name', 'date', 'hour')
+    list_filter = ('name', 'date',)
 
 
 @admin.register(Sponsor)

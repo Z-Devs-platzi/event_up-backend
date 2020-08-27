@@ -14,7 +14,7 @@ class Event(GeneralModel):
 
     # Event data
     name = models.CharField(max_length=100, unique=True)
-    date = models.DateTimeField()
+    date = models.DateTimeField(null=True, blank=True)
     description = models.TextField()
     url = models.URLField()
     banner_img = models.URLField()
