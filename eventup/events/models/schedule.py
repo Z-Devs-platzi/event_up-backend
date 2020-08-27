@@ -10,8 +10,8 @@ class Schedule(GeneralModel):
 
     # Schedule data
     title = models.CharField(max_length=300, blank=True)
-    date = models.DateField()
-    hour = models.TimeField(null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     # Relations
     expositors = models.ManyToManyField(
