@@ -21,9 +21,8 @@ sudo docker-compose down
 
 # Remove all
 if [ -n "$COMMAND" && "$COMMAND" = 'clean' ]; then
-    # Remove Data
     sudo docker rm -vf $(sudo docker ps -a -q)
-    sudo docker rmi -f $(sudo docker images -a -q)\
+    sudo docker rmi -f $(sudo docker images -a -q)
     sudo docker system prune -f
     sudo docker volume prune -f
 fi
@@ -35,11 +34,10 @@ git reset --hard origin/master
 git fetch --all
 git pull origin master | sudo docker-compose build
 
-# Remove all
+# Migrations
 if [ -n "$COMMAND" && "$COMMAND" = 'clean' ]; then
-    # Migrations
     find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-    find . -path "*/migrations/*.pyc"  -delete
+    find . -path "*/migrations/*.pyc" -delete
     sudo docker-compose run --rm django python manage.py makemigrations
     sudo docker-compose run --rm django python manage.py migrate
 fi
