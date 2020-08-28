@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check Code
-      run: docker-compose run --rm -f ./actions.yml django flake8
+      run: docker-compose -f ./actions.yml run --rm django flake8
