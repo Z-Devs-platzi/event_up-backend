@@ -10,4 +10,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build with Docker
-      run: docker-compose -f ./actions.yml build --tag z-devs-platzi/event_up-backend:${{steps.vars.outputs.tag}}
+      run: docker-compose -f ./actions.yml build
