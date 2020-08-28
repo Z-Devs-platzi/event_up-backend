@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: ls /
-    - run: echo $HOME
+    - run: ls $HOME
+    - name: Set environment variables
+      run: |
+        echo ::set-env name=COMPOSE_FILE::actions.yml
     - name: Check Code
       run: docker-compose run --rm django flake8
     - name: Build with Docker
-      run: docker-compose -f build
+      run: docker-compose build
