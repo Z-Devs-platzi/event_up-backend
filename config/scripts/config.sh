@@ -2,6 +2,8 @@
 
 # Use: sh deploy.sh
 # Flags: sh deploy.sh update/clean
+ROUTE=/home/ubuntu/backend/config/scripts/
+cd $ROUTE
 sudo chmod +x ./config.sh
 sudo chmod +x ./deploy.sh
 
@@ -15,7 +17,7 @@ BASE_PATH_NAME="$BASE_PATH/$BASE_NAME"
 
 # Update all
 if [ "$COMMAND" = 'update' ]; then
-    sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get update -y && sudo apt-get upgrade -y
 fi
 
 # Permissions Git

@@ -14,7 +14,8 @@ BASE_PATH_NAME="$BASE_PATH/$BASE_NAME"
 echo "Script path with name: $BASE_PATH_NAME"
 
 # Inside the project
-export COMPOSE_FILE=production.yml
+FILE_DOCKER=production.yml
+export COMPOSE_FILE="$BASE_PATH/$FILE_DOCKER"
 
 # Stop Services
 sudo supervisorctl stop $PROJECT
@@ -30,6 +31,7 @@ fi
 
 # Get new changes &&  Build new changes Get Pull
 # git clean
+git reset --hard
 git checkout master
 git reset --hard origin/master
 git fetch --all
