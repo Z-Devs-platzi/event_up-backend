@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: List
-      run: echo ${{github.workspace}}
+      run: echo ${{github.HOME}}
     - name: Build with Docker
-      run: docker-compose -f ${{github.workspace}}/actions.yml build
+      run: docker-compose -f ${{github.HOME}}/actions.yml build
     - name: Check Code
       run: docker-compose run --rm django flake8
