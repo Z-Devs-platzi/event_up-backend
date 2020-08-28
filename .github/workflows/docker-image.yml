@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: docker build
-        uses: actions/docker/cli@master
-        with:
-          args: build -t Z-Devs-platzi/event_up-backend .
+    - name: The Docker CLI
+      # You may pin to the exact commit or the version.
+      # uses: actions-hub/docker@726e89023248c002cf9aadfc8b8364687a3ed25f
+      uses: actions-hub/docker@v1.0.0
