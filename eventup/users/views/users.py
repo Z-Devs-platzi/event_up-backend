@@ -4,7 +4,6 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 # Serializers
 from eventup.users.serializers import (
@@ -14,7 +13,7 @@ from eventup.users.serializers import (
     AccountVerificationSerializer
 )
 
-# ViewSet
+
 class UserViewSet(viewsets.GenericViewSet):
     """User view set.
 

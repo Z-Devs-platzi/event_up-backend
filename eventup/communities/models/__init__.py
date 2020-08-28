@@ -1,1 +1,1 @@
-from .communities import Community
+from .communities import Community # noqa
