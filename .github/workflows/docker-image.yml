@@ -10,14 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: ls $HOME
-    - run: ls $HOME/work/event_up-backend
-
-    #- name: Set environment variables
-    #  run: |
-    #    echo ::set-env name=COMPOSE_FILE::./actions.yml
-      # cp local.yml docker-compose.yml
-    - name: Build with Docker
-      run: docker-compose build
-    - name: Check Code
-      run: docker-compose run --rm django flake8
+      - name: docker build
+        uses: actions/docker/cli@master
+        with:
+          args: build -t Z-Devs-platzi/event_up-backend .
