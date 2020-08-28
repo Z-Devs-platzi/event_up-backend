@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: ls z-devs-platzi/event_up-backend
+    - run: ls ${{ matrix.os }}
     - run: ls $HOME
-    - name: Set environment variables
-      run: |
-        echo ::set-env name=COMPOSE_FILE::./actions.yml
+    #- name: Set environment variables
+    #  run: |
+    #    echo ::set-env name=COMPOSE_FILE::./actions.yml
     - name: Build with Docker
       run: docker-compose build
     - name: Check Code
