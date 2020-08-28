@@ -2,9 +2,9 @@ name: Docker Check CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check Code
-      run: docker-compose run --rm django flake8
+      run: docker-compose run --rm -f ./actions.yml django flake8
