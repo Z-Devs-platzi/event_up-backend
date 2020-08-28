@@ -11,11 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: ls $HOME
-    - run: ls $HOME/factory
-    - run: ls $HOME/perflog
-    - run: ls $HOME/runners
-    - run: ls $HOME/warmup
-    - run: ls $HOME/work
+    - run: ls $HOME/work/event_up-backend
 
     #- name: Set environment variables
     #  run: |
