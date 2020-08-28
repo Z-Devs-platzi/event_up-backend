@@ -10,11 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: ls ${{ matrix.os }}
     - run: ls $HOME
+    - run: ls $HOME/factory
+    - run: ls $HOME/perflog
+    - run: ls $HOME/runners
+    - run: ls $HOME/warmup
+    - run: ls $HOME/work
+
     #- name: Set environment variables
     #  run: |
     #    echo ::set-env name=COMPOSE_FILE::./actions.yml
+      # cp local.yml docker-compose.yml
     - name: Build with Docker
       run: docker-compose build
     - name: Check Code
