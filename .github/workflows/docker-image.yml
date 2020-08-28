@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: List
-      run: echo ${{github}} && ls ${{HOME}} && ls && ls -al ${{github.HOME}}
+      run: echo ${{github}} && ls ${{github}} && ls && ls -al ${{github.HOME}}
     - name: Build with Docker
       run: docker-compose -f ${{github.HOME}}/actions.yml build
     - name: Check Code
