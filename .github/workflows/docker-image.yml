@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: List
-      run: ls -al ../
+      run: ls -al ../event_up-backend
     - name: Build with Docker
       run: docker-compose -f actions.yml build
     - name: Check Code
