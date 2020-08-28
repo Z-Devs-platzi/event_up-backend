@@ -10,10 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: List
     - run: ls /
     - run: echo $HOME
     - name: Check Code
       run: docker-compose run --rm django flake8
     - name: Build with Docker
-      run: docker-compose -f $HOME/actions.yml build
+      run: docker-compose -f build
