@@ -3,11 +3,7 @@ name: Deploy to Amazon EC2
 on:
   check_run:
     types: [completed]
-  release:
-    types: [created]
-  push:
-    branches: [ master ]
-
+  
 jobs:
   deploy:
     name: Deploy
