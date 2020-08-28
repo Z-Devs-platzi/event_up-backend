@@ -10,8 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Build the Docker image
-      run: docker-compose -f ${{github.workspace}}/actions.yml build
+    - name: Build with Docker
+      run: docker-compose -f ./actions.yml build
     - name: Check Code
       run: docker-compose run --rm django flake8
-
