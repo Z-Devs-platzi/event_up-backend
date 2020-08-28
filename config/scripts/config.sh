@@ -4,33 +4,31 @@
 # Flags: sh deploy.sh update/clean
 sudo chmod +x ./config.sh
 sudo chmod +x ./deploy.sh
-# PATH
-BASE_NAME=`basename $0`
+
+# Config elements
+COMMAND=$1
+
+BASE_NAME=$(basename $0)
 BASE_PATH=$(dirname $(readlink -f $0))
 BASE_PATH_NAME="$BASE_PATH/$BASE_NAME"
 # echo "Script path with name: $BASE_PATH_NAME"
 
-# Config elements
-COMMAND=$1 || ''
-
-# # Update all
-# if [ -n "$COMMAND" && $COMMAND = 'update' ]; then
-#     sudo apt-get update -y && sudo apt-get upgrade -y
-# fi
+# Update all
+if [ "$COMMAND" = 'update' ]; then
+    sudo apt-get update -y && sudo apt-get upgrade -y
+fi
 
 # Permissions Git
 ROUTE=/home/ubuntu/backend/
-cd `${ROUTE}.git/objects`
-pwd
-ls
+GIT_FIX="$ROUTE.git/objects"
+cd $GIT_FIX
 sudo chown -R "${USER:-$(id -un)}" .
 
 # Inside the project
-ROUTE_FILE=`$BASE_PATH/deploy.sh`
+LOCAL_FILE="$BASE_PATH/deploy.sh"
+ROUTE_FILE="$ROUTE/deploy.sh"
 sudo rm -rf $ROUTE_FILE
-sudo cp $ROUTE_FILE `${ROUTE}deploy.sh`
-sudo chmod +x `${ROUTE}deploy.sh`
+sudo cp $LOCAL_FILE $ROUTE_FILE
+sudo chmod +x $ROUTE_FILE
 cd $ROUTE
-pwd
-ls
-# sh deploy.sh $COMMAND
+sudo sh deploy.sh $COMMAND
