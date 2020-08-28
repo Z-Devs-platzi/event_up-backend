@@ -13,3 +13,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build with Docker
       run: docker-compose -f ./actions.yml build
+    - name: Check Code
+      run: docker-compose run --rm django flake8
