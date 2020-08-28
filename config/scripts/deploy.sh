@@ -15,7 +15,13 @@ echo "Script path with name: $BASE_PATH_NAME"
 
 # Inside the project
 FILE_DOCKER=production.yml
-export COMPOSE_FILE="$BASE_PATH/$FILE_DOCKER"
+COMPOSE_FILE="$BASE_PATH/$FILE_DOCKER"
+export COMPOSE_FILE=$COMPOSE_FILE
+
+# Flag Ubuntu
+FILE_DOCKER_COMPOSE="$BASE_PATH/docker-compose.yml"
+sudo rm -rf $FILE_DOCKER_COMPOSE
+sudo cp $COMPOSE_FILE $FILE_DOCKER_COMPOSE
 
 # Stop Services
 sudo supervisorctl stop $PROJECT
