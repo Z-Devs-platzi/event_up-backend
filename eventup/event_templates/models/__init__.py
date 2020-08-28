@@ -1,2 +1,2 @@
-from .templates import Template
-from .layout import Layout
+from .templates import Template # noqa
+from .layout import Layout # noqa

@@ -1,4 +1,4 @@
-from .events import Event
-from .sponsors import Sponsor
-from .expositors import Expositor
-from .schedule import Schedule
+from .events import Event # noqa
+from .sponsors import Sponsor # noqa
+from .expositors import Expositor # noqa
+from .schedule import Schedule # noqa

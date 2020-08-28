@@ -1,10 +1,10 @@
 """Invitations tests."""
 
 # Django
-from django.test import TestCase
+from django.test import TestCase # noqa
 
 # Django REST Framework
-from rest_framework import status
+from rest_framework import status # noqa
 from rest_framework.test import APITestCase
 
 # Faker Data
