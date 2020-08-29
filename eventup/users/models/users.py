@@ -24,12 +24,18 @@ class Users(GeneralModel, AbstractUser):
             'unique': 'A user with that email already exists.'
         }
     )
+    name = models.CharField(
+        'name of user',
+        max_length=100,
+        blank=False,
+        null=False
+    )
 
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
 
     is_client = models.BooleanField(
         'client',
@@ -49,7 +55,7 @@ class Users(GeneralModel, AbstractUser):
     # Reset data - Model Abstract User
     # Main Object
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['username', 'name']
 
     # ABS Functions
     def __str__(self):

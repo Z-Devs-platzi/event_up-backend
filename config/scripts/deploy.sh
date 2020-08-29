@@ -45,8 +45,8 @@ git pull origin master | sudo docker-compose build
 
 # Migrations
 if [ "$COMMAND" = 'clean' ]; then
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/migrations/*.pyc" -delete
+sudo find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+sudo find . -path "*/migrations/*.pyc" -delete
 sudo docker-compose run --rm django python manage.py makemigrations
 sudo docker-compose run --rm django python manage.py migrate
 fi
