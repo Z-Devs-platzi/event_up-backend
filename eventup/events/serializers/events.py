@@ -21,7 +21,6 @@ class EventModelSerializer(serializers.ModelSerializer):
             'url',
             'banner_img',
             'banner_title',
-            'code',
             'template',
             'sponsor',
             'schedule',

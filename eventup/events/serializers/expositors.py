@@ -19,3 +19,14 @@ class ExpositorModelSerializer(serializers.ModelSerializer):
             'twitter',
             'image',
         )
+
+
+class ExpositorCreateSerializer(serializers.Serializer):
+    """ Expositor create serializer """
+
+    name = serializers.CharField()
+
+    def create(self, data):
+        expositor = Expositor.objects.create(**data)
+
+        return expositor
