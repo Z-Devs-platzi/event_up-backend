@@ -11,5 +11,6 @@ urlpatterns = [
 
     # API - Urls
     path('', include(('eventup.users.urls', 'users'), namespace='users')),
+    path('', include(('eventup.events.urls', 'events'), namespace='events')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

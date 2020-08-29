@@ -1,1 +1,1 @@
-from .events import *  # noqa
+from .expositors import *  # noqa
