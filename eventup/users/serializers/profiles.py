@@ -16,13 +16,5 @@ class ProfileModelSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             'picture',
-            'biography',
-            'rides_taken',
-            'rides_offered',
-            'reputation'
-        )
-        read_only_fields = (
-            'rides_taken',
-            'rides_offered',
-            'reputation'
+            'biography'
         )
