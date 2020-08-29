@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
 # Models
-from eventup.users.models import Users, Profile
+from eventup.users.models import User, Profile
 
 # Tasks
 from eventup.taskapp.tasks import send_confirmation_email
@@ -25,12 +25,13 @@ import jwt
 
 class UserModelSerializer(serializers.ModelSerializer):
     """User model serializer."""
+
     profile = ProfileModelSerializer(read_only=True)
 
     class Meta:
         """Meta class."""
 
-        model = Users
+        model = User
         fields = (
             'username',
             'name',
@@ -44,17 +45,14 @@ class UserSignUpSerializer(serializers.Serializer):
 
     Handle sign up data validation and user/profile creation.
     """
-    # Name
-    name = serializers.CharField(min_length=2, max_length=30)
 
     email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=Users.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all())]
     )
-
     username = serializers.CharField(
         min_length=4,
         max_length=20,
-        validators=[UniqueValidator(queryset=Users.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
     # Phone number
@@ -62,19 +60,27 @@ class UserSignUpSerializer(serializers.Serializer):
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
-    phone_number = serializers.CharField(validators=[phone_regex], max_length=17, required=False)
+    phone_number = serializers.CharField(validators=[phone_regex])
 
     # Password
     password = serializers.CharField(min_length=8, max_length=64)
 
+    # Name
+    name = serializers.CharField(min_length=2, max_length=30)
+
     def validate(self, data):
         """Verify passwords match."""
-        password_validation.validate_password(data['password'])
+        passwd = data['password']
+        # passwd_conf = data['password_confirmation']
+        # if passwd != passwd_conf:
+        #     raise serializers.ValidationError("Passwords don't match.")
+        password_validation.validate_password(passwd)
         return data
 
     def create(self, data):
         """Handle user and profile creation."""
-        user = Users.objects.create_user(**data, is_verified=False)
+        # data.pop('password_confirmation')
+        user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
         return user
@@ -112,7 +118,6 @@ class AccountVerificationSerializer(serializers.Serializer):
 
     def validate_token(self, data):
         """Verify token is valid."""
-        print(data, settings.SECRET_KEY)
         try:
             payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
@@ -128,6 +133,6 @@ class AccountVerificationSerializer(serializers.Serializer):
     def save(self):
         """Update user's verified status."""
         payload = self.context['payload']
-        user = Users.objects.get(username=payload['user'])
+        user = User.objects.get(username=payload['user'])
         user.is_verified = True
         user.save()
