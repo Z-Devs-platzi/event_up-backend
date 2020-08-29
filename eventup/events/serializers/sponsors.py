@@ -19,3 +19,14 @@ class SponsorModelSerializer(serializers.ModelSerializer):
             'web',
             'logo',
         )
+
+
+class SponsorCreateSerializer(serializers.Serializer):
+    """ Sponsor create serializer """
+
+    name = serializers.CharField()
+
+    def create(self, data):
+        sponsor = Sponsor.objects.create(**data)
+
+        return sponsor
