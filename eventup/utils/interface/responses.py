@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 
 class CustomActions():
-    def custom_response(self, status, message, data, status_code):
+    def custom_response(self, status_code, status, message, data=None):
         response = {
             "status": status,
             # "data": data.data,

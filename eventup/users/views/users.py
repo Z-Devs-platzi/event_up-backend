@@ -22,6 +22,7 @@ class UserViewSet(viewsets.GenericViewSet):
     Handle sign up, login and account verification
     """
 
+    #customActions = CustomActions()
     # users/login
     @action(detail=False, methods=['post'])
     def login(self, request):
@@ -33,7 +34,7 @@ class UserViewSet(viewsets.GenericViewSet):
             'user': UserModelSerializer(user).data,
             'authToken': token
         }
-        return Response(data, status=status.HTTP_201_CREATED)
+        return CustomActions().custom_response(status.HTTP_200_OK, True, 'Login Success', data)
 
     # users/signup
     @action(detail=False, methods=['post'])
@@ -47,9 +48,8 @@ class UserViewSet(viewsets.GenericViewSet):
         user = serializer.save()
         # Return User
         email = UserModelSerializer(user).data.get('email')
-        response = CustomActions().custom_response(True, 'Singup Success', {"email": email}, status.HTTP_201_CREATED)
         # Get Status
-        return response
+        return CustomActions().custom_response(status.HTTP_201_CREATED, True, 'Singup Success', {"email": email})
 
     @action(detail=False, methods=['get'])
     def verify(self, request, *args, **kwargs):
@@ -61,4 +61,4 @@ class UserViewSet(viewsets.GenericViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             message = 'Congratulation, now go share some rides!'
-        return Response({'message': message}, status=status.HTTP_200_OK)
+        return CustomActions().custom_response(status.HTTP_200_OK, True, message)
