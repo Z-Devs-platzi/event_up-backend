@@ -13,6 +13,8 @@ from eventup.users.serializers import (
     AccountVerificationSerializer
 )
 
+from eventup.utils.interface.responses import CustomActions
+
 
 class UserViewSet(viewsets.GenericViewSet):
     """User view set.
@@ -44,9 +46,10 @@ class UserViewSet(viewsets.GenericViewSet):
         # Save Object
         user = serializer.save()
         # Return User
-        data = UserModelSerializer(user).data
+        email = UserModelSerializer(user).data.get('email')
+        response = CustomActions().custom_response(True, 'Singup Success', {"email": email}, status.HTTP_201_CREATED)
         # Get Status
-        return Response(data, status=status.HTTP_201_CREATED)
+        return response
 
     @action(detail=False, methods=['get'])
     def verify(self, request, *args, **kwargs):
