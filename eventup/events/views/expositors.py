@@ -8,8 +8,6 @@ from eventup.events.serializers import (
     ExpositorCreateSerializer,
 )
 
-# Models
-from eventup.events.models import Expositor
 
 from eventup.utils.interface.responses import CustomActions
 
@@ -41,6 +39,7 @@ class ExpositorViewSet(viewsets.GenericViewSet):
 
     def get(self, request, *args, **kwargs):
         """Return Expositor."""
-        #expositors = Expositor.objects.all()
+
+        # expositors = Expositor.objects.all()
         message = 'Expositors data'
         return CustomActions().custom_response(status.HTTP_200_OK, True, message)
