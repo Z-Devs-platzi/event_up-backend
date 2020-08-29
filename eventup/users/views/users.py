@@ -3,7 +3,6 @@
 # Django REST Framework
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 
 # Serializers
 from eventup.users.serializers import (
@@ -22,7 +21,8 @@ class UserViewSet(viewsets.GenericViewSet):
     Handle sign up, login and account verification
     """
 
-    #customActions = CustomActions()
+    # customActions = CustomActions()
+
     # users/login
     @action(detail=False, methods=['post'])
     def login(self, request):
