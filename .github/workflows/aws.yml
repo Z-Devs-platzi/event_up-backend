@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.AWS_USER }}
         # content of ssh private key. ex raw content of ~/.ssh/id_rsa
         key: ${{ secrets.AWS_SUPER_KEY }}
-        # execute commands
-        script: /home/${{ secrets.AWS_PATH }}
+        # execute commands (update, clean or migrate)
+        script: /home/${{ secrets.AWS_PATH }} migrate
         # enable debug mode
         debug: true
