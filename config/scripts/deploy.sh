@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Use: sh deploy.sh
-# Flags: sh deploy.sh update/clean
+# Flags: sh deploy.sh update/clean/migrate
 
 # Config elements
 PROJECT='eventup'
@@ -44,7 +44,7 @@ git fetch --all
 git pull origin master | sudo docker-compose build
 
 # Migrations
-if [ "$COMMAND" = 'clean' ]; then
+if [ "$COMMAND" = 'migrate' ]; then
 sudo find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 sudo find . -path "*/migrations/*.pyc" -delete
 sudo docker-compose run --rm django python manage.py makemigrations
