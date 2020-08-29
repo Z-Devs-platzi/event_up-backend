@@ -55,10 +55,12 @@ class UserViewSet(viewsets.GenericViewSet):
     def verify(self, request, *args, **kwargs):
         """Handle HTTP GET request."""
         message = 'Not found data'
+        status_custom = False
         token = request.query_params.get('token')
         if token:
             serializer = AccountVerificationSerializer(data={'token': token})
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            status_custom = True
             message = 'Congratulation, now go share some rides!'
-        return CustomActions().custom_response(status.HTTP_200_OK, True, message)
+        return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
