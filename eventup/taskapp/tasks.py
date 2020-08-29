@@ -38,7 +38,7 @@ def send_confirmation_email(user_pk):
     user = Users.objects.get(pk=user_pk)
     verification_token = gen_verification_token(user)
     subject = 'Welcome @{}! Verify your account to start using Event Up'.format(user.username)
-    from_email = 'Event Up <noreply@comparteride.com>'
+    from_email = 'Event Up <noreply@eventup.codes>'
     content = render_to_string(
         'emails/users/account_verification.html',
         {'token': verification_token, 'user': user}

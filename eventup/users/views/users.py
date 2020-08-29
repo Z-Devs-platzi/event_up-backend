@@ -37,10 +37,15 @@ class UserViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=['post'])
     def signup(self, request):
         """Handle HTTP POST request."""
+        # Make Serializer and Set Data
         serializer = UserSignUpSerializer(data=request.data)
+        # Validate Model
         serializer.is_valid(raise_exception=True)
+        # Save Object
         user = serializer.save()
+        # Return User
         data = UserModelSerializer(user).data
+        # Get Status
         return Response(data, status=status.HTTP_201_CREATED)
 
     @action(detail=False, methods=['get'])

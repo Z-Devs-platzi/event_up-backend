@@ -1,12 +1,22 @@
-<p>Welcome @{{ user.username }}!</p>
+<style>
+  #body-email{margin:auto;width:800px;text-align:center}#header{margin:auto;display:flex;align-items:center;background-color:#125e68;height:200px}#header h2{color:#fff;margin:auto}#content{margin:auto;width:600px}.space-object{margin:5rem}
+</style>
+<div id="body-email">
+  <section id="header">
+    <img src="/static/default.png" width="200px" />
+    <h2>Welcome @{{ user.username }}!</h2>
+  </section>
+  <section id="content">
+    <p class="space-object">
+      Before you start using <b>Event Up</b> we need you to do one last thing.
+      Please visit the following <a href="https://eventup.codes/users/verify?token={{ token }}">link</a> and enter this code
+    </p>
 
-<p>
-    Before you start using <b>Event Up</b> we need you to do one last thing.
-    Please visit the following <a href="">link</a> and enter this code
-</p>
-
-<p style="text-align:center">
-    <code style="text-align:center">
-        {{ token }}
-    </code>
-</p>
+    <p>
+      <code>
+        https://eventup.codes/users/verify?token={{ token }}
+      </code>
+    </p>
+    <small>Zdevs - EventUp</small>
+  </section>
+</div>

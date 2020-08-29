@@ -50,39 +50,27 @@ class UserSignUpSerializer(serializers.Serializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=Users.objects.all())]
     )
-    username = serializers.CharField(
-        min_length=4,
-        max_length=20,
-        validators=[UniqueValidator(queryset=Users.objects.all())]
-    )
 
     # Phone number
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
-    phone_number = serializers.CharField(validators=[phone_regex])
+    phone_number = serializers.CharField(validators=[phone_regex], blank=True, null=True)
 
     # Password
     password = serializers.CharField(min_length=8, max_length=64)
-    password_confirmation = serializers.CharField(min_length=8, max_length=64)
 
     # Name
-    first_name = serializers.CharField(min_length=2, max_length=30)
-    last_name = serializers.CharField(min_length=2, max_length=30)
+    fullname = serializers.CharField(min_length=2, max_length=50)
 
     def validate(self, data):
         """Verify passwords match."""
-        passwd = data['password']
-        passwd_conf = data['password_confirmation']
-        if passwd != passwd_conf:
-            raise serializers.ValidationError("Passwords don't match.")
-        password_validation.validate_password(passwd)
+        password_validation.validate_password(data['password'])
         return data
 
     def create(self, data):
         """Handle user and profile creation."""
-        data.pop('password_confirmation')
         user = Users.objects.create_user(**data, is_verified=False)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
