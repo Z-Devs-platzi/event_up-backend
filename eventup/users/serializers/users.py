@@ -33,10 +33,8 @@ class UserModelSerializer(serializers.ModelSerializer):
         model = Users
         fields = (
             'username',
-            'first_name',
-            'last_name',
+            'name',
             'email',
-            'phone_number',
             'profile'
         )
 
@@ -46,8 +44,16 @@ class UserSignUpSerializer(serializers.Serializer):
 
     Handle sign up data validation and user/profile creation.
     """
+    # Name
+    name = serializers.CharField(min_length=2, max_length=30)
 
     email = serializers.EmailField(
+        validators=[UniqueValidator(queryset=Users.objects.all())]
+    )
+
+    username = serializers.CharField(
+        min_length=4,
+        max_length=20,
         validators=[UniqueValidator(queryset=Users.objects.all())]
     )
 
@@ -56,13 +62,10 @@ class UserSignUpSerializer(serializers.Serializer):
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
-    phone_number = serializers.CharField(validators=[phone_regex], blank=True, null=True)
+    phone_number = serializers.CharField(validators=[phone_regex], max_length=17, required=False)
 
     # Password
     password = serializers.CharField(min_length=8, max_length=64)
-
-    # Name
-    fullname = serializers.CharField(min_length=2, max_length=50)
 
     def validate(self, data):
         """Verify passwords match."""
