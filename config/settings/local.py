@@ -29,10 +29,14 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG  # NOQA
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
-
 # django-extensions
-INSTALLED_APPS += ['django_extensions']  # noqa F405
+INSTALLED_APPS += ['django_extensions', 'corsheaders']  # noqa F405
 
 # Celery - If this const are in TRUE don't run the task in celery but if are False (Celery run "async")
 CELERY_TASK_ALWAYS_EAGER = True
 CELERY_TASK_EAGER_PROPAGATES = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
