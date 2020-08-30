@@ -4,12 +4,12 @@
 from django.contrib import admin
 
 # Models
-from eventup.communities.models import Community
+from eventup.organization.models import Organization
 
 
-@admin.register(Community)
-class CommunityAdmin(admin.ModelAdmin):
-    ''' Event model admin '''
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    ''' Organization model admin '''
 
     list_display = ('name', 'social_url')
     search_fields = ('name',)

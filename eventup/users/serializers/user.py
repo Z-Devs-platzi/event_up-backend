@@ -3,7 +3,7 @@
 # Django
 from django.conf import settings
 from django.contrib.auth import password_validation, authenticate
-from django.core.validators import RegexValidator
+
 
 # Django REST Framework
 from rest_framework import serializers
@@ -75,6 +75,7 @@ class UserSignUpSerializer(serializers.Serializer):
     def create(self, data):
         """Handle user and profile creation."""
         # data.pop('password_confirmation')
+        # role = RoleAdmin.objects.get_or_create(name='admin')
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)

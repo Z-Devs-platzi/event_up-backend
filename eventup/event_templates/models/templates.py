@@ -10,8 +10,13 @@ class Template(GeneralModel):
     """ Template Model """
 
     name = models.CharField(max_length=100, unique=True, blank=True)
-    colors = models.TextField()
-    banner = models.URLField()
+    colors = models.CharField(max_length=255)
+    banner = models.ImageField(
+        'banner picture',
+        upload_to='banner/pictures/',
+        blank=True,
+        null=True
+    )
     font = models.CharField(max_length=100, blank=True)
 
     # Templates Relations
