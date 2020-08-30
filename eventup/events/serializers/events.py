@@ -7,7 +7,7 @@ from rest_framework import serializers
 from eventup.events.models import Event
 
 
-class EventModelSerializer(serializers.ModelSerializer):
+class EventModelSerializer(serializers.HyperlinkedModelSerializer):
     """ Event model serializer """
 
     class Meta:
@@ -15,6 +15,7 @@ class EventModelSerializer(serializers.ModelSerializer):
 
         model = Event
         fields = (
+            'pk',
             'name',
             'date',
             'description',
@@ -22,22 +23,30 @@ class EventModelSerializer(serializers.ModelSerializer):
             'banner_img',
             'banner_title',
             'template',
-            'sponsor',
-            'schedule',
+            # 'sponsor',
+            # 'schedule',
         )
 
+    def validate(self, data):
 
-class EventCreateSerializer(serializers.Serializer):
-    """ Event create serializer """
-
-    name = serializers.CharField()
-    date = serializers.DateTimeField()
-    description = serializers.CharField()
-    url = serializers.URLField()
-    banner_img = serializers.ImageField()
-    banner_title = serializers.CharField()
+        response = data
+        return response
 
     def create(self, data):
-        event = Event.objects.create(**data)
+        return Event.objects.create(**data)
 
-        return event
+    def update(self, instance, validated_data):
+        event_validated_data = validated_data.pop('event', None)
+
+        event = instance.event
+        event.name = event_validated_data.get('name', event.name)
+        event.date = event_validated_data.get('date', event.date)
+        event.description = event_validated_data.get('description', event.description)
+        event.url = event_validated_data.get('url', event.url)
+        event.banner_img = event_validated_data.get('banner_img', event.banner_img)
+        event.banner_title = event_validated_data.get('')
+
+        event.save()
+
+        instance.save()
+        return instance
