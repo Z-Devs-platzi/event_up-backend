@@ -28,7 +28,7 @@ class SponsorViewSet(mixins.CreateModelMixin,
         """Assign permission based on action."""
 
         permissions = [IsAuthenticated]
-        return [p() for p in permissions]
+        return [permission() for permission in permissions]
 
     def get_queryset(self):
         """Restrict list to public-only."""

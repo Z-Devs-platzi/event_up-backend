@@ -20,7 +20,7 @@ class EventAdmin(admin.ModelAdmin):
 class SponsorsAdmin(admin.ModelAdmin):
     ''' Sponsors model admin '''
 
-    list_display = ('name', 'level')
+    list_display = ('pk', 'name', 'level')
     search_fields = ('name',)
     list_filter = ('level',)
 

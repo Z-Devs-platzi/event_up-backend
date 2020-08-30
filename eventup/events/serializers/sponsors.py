@@ -14,6 +14,7 @@ class SponsorModelSerializer(serializers.HyperlinkedModelSerializer):
         """ Meta class """
         model = Sponsor
         fields = (
+            'pk',
             'name',
             'level',
             'web',
@@ -38,3 +39,6 @@ class SponsorModelSerializer(serializers.HyperlinkedModelSerializer):
         sponsor.logo = sponsor_validated_data.get('logo', sponsor.logo)
 
         sponsor.save()
+
+        instance.save()
+        return instance
