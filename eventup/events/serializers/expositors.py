@@ -47,4 +47,3 @@ class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
         instance.last_login_date = validated_data.get('last_login_date', instance.last_login_date)
         instance.save()
         return instance
-
