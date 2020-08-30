@@ -25,6 +25,9 @@ class ExpositorCreateSerializer(serializers.Serializer):
     """ Expositor create serializer """
 
     name = serializers.CharField()
+    bio = serializers.CharField()
+    twitter = serializers.URLField()
+    picture = serializers.ImageField()
 
     def create(self, data):
         expositor = Expositor.objects.create(**data)
