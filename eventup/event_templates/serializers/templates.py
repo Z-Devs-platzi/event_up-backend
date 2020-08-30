@@ -26,7 +26,7 @@ class TemplateCreateSerializer(serializers.Serializer):
 
     name = serializers.CharField()
     colors = serializers.CharField()
-    banner = serializers.URLField()
+    banner = serializers.ImageField()
     font = serializers.CharField()
 
     def create(self, data):
