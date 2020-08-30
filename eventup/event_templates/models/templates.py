@@ -11,7 +11,12 @@ class Template(GeneralModel):
 
     name = models.CharField(max_length=100, unique=True, blank=True)
     colors = models.CharField(max_length=255)
-    banner = models.URLField()
+    banner = models.ImageField(
+        'banner picture',
+        upload_to='banner/pictures/',
+        blank=True,
+        null=True
+    )
     font = models.CharField(max_length=100, blank=True)
 
     # Templates Relations
