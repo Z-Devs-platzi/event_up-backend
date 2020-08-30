@@ -3,7 +3,6 @@
 # Django REST Framework
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 
 # Permissions
 from rest_framework.permissions import (
@@ -49,7 +48,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAuthenticated, IsAccountOwner]
         else:
             permissions = [IsAuthenticated]
-        return [p() for p in permissions]
+        return [permission() for permission in permissions]
 
     # users/login
 
