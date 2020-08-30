@@ -8,6 +8,8 @@ from eventup.events.models import Expositor
 
 
 class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
+    """ Expositor model serializer """
+
     id = serializers.CharField(source='pk', read_only=True)
 
     class Meta:
@@ -47,4 +49,3 @@ class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
         instance.last_login_date = validated_data.get('last_login_date', instance.last_login_date)
         instance.save()
         return instance
-

@@ -45,7 +45,6 @@ class ExpositorViewSet(mixins.CreateModelMixin,
             return self.queryset.filter(status='active')
         return self.queryset
 
-
     def get_permissions(self):
         """Assign permissions based on action."""
         permissions = [IsAuthenticated]

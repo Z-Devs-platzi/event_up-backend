@@ -1,38 +1,37 @@
 """Expositors views."""
 
 # Django REST Framework
-from rest_framework import status, viewsets
+from rest_framework import viewsets
+from rest_framework import mixins
 
 # Serializers
-from eventup.events.serializers import SponsorCreateSerializer
+from eventup.events.serializers import SponsorModelSerializer
+from eventup.events.models import Sponsor
+
+# Permissions
+from rest_framework.permissions import IsAuthenticated
 
 
-from eventup.utils.interface.responses import CustomActions
-
-
-class SponsorViewSet(viewsets.GenericViewSet):
+class SponsorViewSet(mixins.CreateModelMixin,
+                     mixins.ListModelMixin,
+                     mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
     """ Sponsor view set
 
         Crud for sponsors
     """
-    # sponsor/create
 
-    def create(self, request, *args, **kwargs):
-        """ Handle HTTP POST request """
+    queryset = Sponsor.objects.all()
+    serializer_class = SponsorModelSerializer
 
-        status_custom = False
-        message = 'Error to create a new Sponsor'
-        serializer = SponsorCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        sponsor = serializer.save()
+    def get_permissions(self):
+        """Assign permission based on action."""
 
-        if sponsor:
-            status_custom = True
-            message = "Sponsor created with success"
-        return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
+        permissions = [IsAuthenticated]
+        return [p() for p in permissions]
 
-    def get(self, request, *args, **kwargs):
-        """Return Sponsor."""
-
-        message = 'Expositors data'
-        return CustomActions().custom_response(status.HTTP_200_OK, True, message)
+    def get_queryset(self):
+        """Restrict list to public-only."""
+        if self.action == 'list':
+            return self.queryset.filter(status='active')
+        return self.queryset
