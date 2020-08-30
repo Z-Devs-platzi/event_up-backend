@@ -10,7 +10,7 @@ from eventup.utils.models import GeneralModel
 class Layout(GeneralModel):
     """ Layout Model """
 
-    comment = models.TextField()
+    comment = models.CharField(max_length=500)
 
     def __str__(self):
         return str(self.comment)

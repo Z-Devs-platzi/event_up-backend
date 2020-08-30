@@ -47,12 +47,14 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_seed',
     # 'django_filters'
 ]
 LOCAL_APPS = [
     'eventup.users.apps.UsersAppConfig',
     'eventup.events.apps.EventAppConfig',
     'eventup.event_templates.apps.TemplateAppConfig',
+    'eventup.organization.apps.OrganizationAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
