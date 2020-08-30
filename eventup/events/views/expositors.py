@@ -4,9 +4,7 @@
 from rest_framework import status, viewsets
 
 # Serializers
-from eventup.events.serializers import (
-    ExpositorCreateSerializer,
-)
+from eventup.events.serializers import ExpositorCreateSerializer
 
 
 from eventup.utils.interface.responses import CustomActions

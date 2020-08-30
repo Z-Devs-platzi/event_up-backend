@@ -4,9 +4,7 @@
 from rest_framework import status, viewsets
 
 # Serializers
-from eventup.events.serializers import (
-    SponsorCreateSerializer,
-)
+from eventup.events.serializers import SponsorCreateSerializer
 
 
 from eventup.utils.interface.responses import CustomActions
@@ -25,7 +23,7 @@ class SponsorViewSet(viewsets.GenericViewSet):
         status_custom = False
         message = 'Error to create a new Sponsor'
         serializer = SponsorCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exceptio=True)
+        serializer.is_valid(raise_exception=True)
         sponsor = serializer.save()
 
         if sponsor:
