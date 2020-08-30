@@ -29,14 +29,14 @@ class ExpositorViewSet(mixins.CreateModelMixin,
     queryset = Expositor.objects.all()
     serializer_class = ExpositorModelSerializer
 
-    def get_permissions(self):
+    def get_permissions(self):  # noqa
         """Assign permission based on action."""
         permissions = [IsAuthenticated]
         # if self.action in ['update', 'partial_update', 'finish']:
         #     permissions.append(IsRideOwner)
         # if self.action == 'join':
         #     permissions.append(IsNotRideOwner)
-        return [p() for p in permissions]
+        return [permission() for permission in permissions]
     # expositor/create
 
     def get_queryset(self):
@@ -44,33 +44,3 @@ class ExpositorViewSet(mixins.CreateModelMixin,
         if self.action == 'list':
             return self.queryset.filter(status='active')
         return self.queryset
-
-    def get_permissions(self):
-        """Assign permissions based on action."""
-        permissions = [IsAuthenticated]
-        # if self.action in ['update', 'partial_update']:
-        #     permissions.append(IsCircleAdmin)
-        return [permission() for permission in permissions]
-    # def create(self, request, *args, **kwargs):
-    #     """Handle HTTP POST request."""
-    #     # Make Serializer and Set Data
-    #     serializer = ExpositorModelSerializer().create(data=request.data)
-    #     # Validate Model
-    #     if not serializer.is_valid():
-    #         data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Error to create a new Expositor', serializer.errors)
-    #     else:
-    #         # Save Objectserializer
-    #         expositor = serializer.save()
-    #         # Return User
-    #         content = {"email": expositor}
-    #         data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Expositor created with success!', content)
-    #     return self.custom_actions.custom_response(data)
-
-    # # expositor/
-
-    # def get(self, request, *args, **kwargs):
-    #     """Return Expositor."""
-
-    #     # expositors = Expositor.objects.all()
-    #     message = 'Expositors data'
-    #     return CustomActions().custom_response(status.HTTP_200_OK, True, message)

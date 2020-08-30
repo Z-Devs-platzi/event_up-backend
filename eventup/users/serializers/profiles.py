@@ -6,6 +6,7 @@ from rest_framework import serializers
 # Models
 from eventup.users.models import Profile
 
+
 class ProfileModelSerializer(serializers.ModelSerializer):
     """Profile model serializer."""
 

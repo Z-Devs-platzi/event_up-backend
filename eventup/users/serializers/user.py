@@ -14,7 +14,7 @@ from rest_framework.validators import UniqueValidator
 from eventup.taskapp.tasks import send_confirmation_email
 
 # Models
-from eventup.users.models import User, Profile, RoleAdmin
+from eventup.users.models import User, Profile
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
