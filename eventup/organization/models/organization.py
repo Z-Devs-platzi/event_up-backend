@@ -9,8 +9,8 @@ from eventup.utils.models import GeneralModel
 
 class Organization(GeneralModel):
 
-    name = models.CharField(max_length=100, blank=True)
-    social_url = models.URLField(max_length=255)
+    name = models.CharField(max_length=100)
+    social_url = models.URLField(max_length=255, blank=True)
     logo = models.ImageField(
         'logo',
         upload_to='organization_logo/pictures/',

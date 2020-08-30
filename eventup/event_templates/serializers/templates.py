@@ -7,29 +7,38 @@ from rest_framework import serializers
 from eventup.event_templates.models import Template
 
 
-class TemplateModelSerializer(serializers.ModelSerializer):
+class TemplateModelSerializer(serializers.HyperlinkedModelSerializer):
     """ Template model serializer """
 
     class Meta:
         """ Meta class """
         model = Template
         fields = (
+            'pk',
             'name',
             'colors',
             'banner',
             'font'
         )
 
+    def validate(self, data):
 
-class TemplateCreateSerializer(serializers.Serializer):
-    """ Template create serializer """
-
-    name = serializers.CharField()
-    colors = serializers.CharField()
-    banner = serializers.ImageField()
-    font = serializers.CharField()
+        response = data
+        return response
 
     def create(self, data):
-        template = Template.objects.create(**data)
+        return Template.objects.create(**data)
 
-        return template
+    def update(self, instance, validated_data):
+        template_validated_data = validated_data.pop('template', None)
+
+        template = instance.template
+        template.name = template_validated_data.get('name', template.name)
+        template.colors = template_validated_data.get('colors', template.colors)
+        template.banner = template_validated_data.get('banner', template.banner)
+        template.font = template_validated_data.get('font', template.font)
+
+        template.save()
+
+        instance.save()
+        return instance
