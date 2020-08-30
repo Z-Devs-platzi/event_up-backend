@@ -36,4 +36,4 @@ class ExpositorAdmin(admin.ModelAdmin):
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     ''' Schedule model admin '''
-    list_display = ('title', 'date')
+    list_display = ('pk', 'title', 'date')
