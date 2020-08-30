@@ -16,7 +16,7 @@ class EventModelSerializer(serializers.ModelSerializer):
         model = Event
         fields = (
             'name',
-            'data',
+            'date',
             'description',
             'url',
             'banner_img',
