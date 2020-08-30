@@ -17,3 +17,14 @@ class LayoutModelSerializer(serializers.ModelSerializer):
         fields = (
             'commet'
         )
+
+
+class LayoutCreateSerializer(serializers.Serializer):
+    """ Layout create serializer """
+
+    comment = serializers.CharField()
+
+    def create(self, data):
+        layout = Layout.objects.create(**data)
+
+        return layout
