@@ -14,6 +14,7 @@ class User(GeneralModel, AbstractUser):
     Extend from Django's Abstract User, change the username field
     to email and add some extra fields.
     """
+    image = models.ImageField(upload_to='users/pictures', blank=True, null=True)
 
     email = models.EmailField(
         'email address',
@@ -22,9 +23,6 @@ class User(GeneralModel, AbstractUser):
             'unique': 'A user with that email already exists.'
         }
     )
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     is_client = models.BooleanField(
         'client',
@@ -40,6 +38,13 @@ class User(GeneralModel, AbstractUser):
         default=True,
         help_text='Set to true when the user have verified its email address.'
     )
+
+    # Foreign Keys
+    role_admin = models.OneToOneField('users.RoleAdmin', on_delete=models.CASCADE, default=1)
+
+    # Fields Elements
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     def __str__(self):
         """Return username."""
