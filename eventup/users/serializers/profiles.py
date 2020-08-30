@@ -6,7 +6,6 @@ from rest_framework import serializers
 # Models
 from eventup.users.models import Profile
 
-
 class ProfileModelSerializer(serializers.ModelSerializer):
     """Profile model serializer."""
 
@@ -16,5 +15,13 @@ class ProfileModelSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             'picture',
-            'biography'
+            'biography',
+            # 'rides_taken',
+            # 'rides_offered',
+            # 'reputation'
         )
+        # read_only_fields = (
+        #     'rides_taken',
+        #     'rides_offered',
+        #     'reputation'
+        # )
