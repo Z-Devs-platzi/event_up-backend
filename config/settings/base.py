@@ -47,6 +47,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_seed',
     # 'django_filters'
 ]
 LOCAL_APPS = [

@@ -3,7 +3,6 @@
 # Django REST Framework
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 
 # Permissions
 from rest_framework.permissions import (
@@ -35,6 +34,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     Handle sign up, login and account verification.
     """
+    custom_actions = CustomActions()
 
     queryset = User.objects.filter(is_active=True, is_client=True)
     serializer_class = UserModelSerializer
@@ -48,21 +48,28 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAuthenticated, IsAccountOwner]
         else:
             permissions = [IsAuthenticated]
-        return [p() for p in permissions]
+        return [permission() for permission in permissions]
 
     # users/login
 
     @action(detail=False, methods=['post'])
     def login(self, request):
-        """Handle HTTP POST request."""
+        # Make Serializer and Set Data
         serializer = UserLoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user, token = serializer.save()
-        data = {
-            'user': UserModelSerializer(user).data,
-            'authToken': token
-        }
-        return CustomActions().custom_response(status.HTTP_200_OK, True, 'Login Success', data)
+        # Validate Model
+        if not serializer.is_valid():
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Error to Login', serializer.errors)
+        else:
+            # Save Object
+            user, token = serializer.save()
+            # Return User
+            content = {
+                'user': UserModelSerializer(user).data,
+                'authToken': token
+            }
+            data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Login Success!', content)
+        # Get Status
+        return self.custom_actions.custom_response(data)
 
     # users/signup
     @action(detail=False, methods=['post'])
@@ -71,40 +78,58 @@ class UserViewSet(mixins.RetrieveModelMixin,
         # Make Serializer and Set Data
         serializer = UserSignUpSerializer(data=request.data)
         # Validate Model
-        serializer.is_valid(raise_exception=True)
-        # Save Object
-        user = serializer.save()
-        # Return User
-        email = UserModelSerializer(user).data.get('email')
+        if not serializer.is_valid():
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Error to Signup', serializer.errors)
+        else:
+            # Save Object
+            user = serializer.save()
+            # Return User
+            content = {"email": UserModelSerializer(user).data.get('email')}
+            data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Singup Success!', content)
         # Get Status
-        return CustomActions().custom_response(status.HTTP_201_CREATED, True, 'Singup Success', {"email": email})
+        return self.custom_actions.custom_response(data)
 
     @action(detail=False, methods=['get'])
     def verify(self, request, *args, **kwargs):
         """Handle HTTP GET request."""
-        message = 'Not found data'
-        status_custom = False
+        # Get Data
         token = request.query_params.get('token')
-        if token:
+        # Validate Model
+        if not token:
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Not found data')
+        else:
+            # Save Object
             serializer = AccountVerificationSerializer(data={'token': token})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            status_custom = True
-            message = 'Congratulation, now go share some rides!'
-        return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
+            if not serializer.is_valid():
+                data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Error to Verify', serializer.errors)
+            else:
+                # Return User
+                serializer.save()
+                data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'User Verify!')
+        # Get Status
+        return self.custom_actions.custom_response(data)
 
     @action(detail=True, methods=['put', 'patch'])
     def profile(self, request, *args, **kwargs):
         """Update profile data."""
+        # Get Data
         user = self.get_object()
-        profile = user.profile
-        partial = request.method == 'PATCH'
-        serializer = ProfileModelSerializer(
-            profile,
-            data=request.data,
-            partial=partial
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        data = UserModelSerializer(user).data
-        return Response(data)
+        # Validate Model
+        if not user:
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Not found data')
+        else:
+            # Save Object
+            profile = user.profile
+            partial = request.method == 'PATCH'
+            serializer = ProfileModelSerializer(
+                profile,
+                data=request.data,
+                partial=partial
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            content = UserModelSerializer(user).data
+            # Return User
+            data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'User Verify!', content)
+        # Get Status
+        return self.custom_actions.custom_response(data)

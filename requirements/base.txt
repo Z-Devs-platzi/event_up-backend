@@ -13,6 +13,9 @@ django==3.1
 # Django Rest
 djangorestframework==3.11.1
 
+# Seeders
+django-seed==0.2.2
+
 # Environment
 django-environ==0.4.5
 

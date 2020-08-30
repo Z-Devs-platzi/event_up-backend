@@ -14,7 +14,7 @@ from rest_framework.validators import UniqueValidator
 from eventup.taskapp.tasks import send_confirmation_email
 
 # Models
-from eventup.users.models import User, Profile
+from eventup.users.models import User, Profile, RoleAdmin
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
@@ -75,6 +75,7 @@ class UserSignUpSerializer(serializers.Serializer):
     def create(self, data):
         """Handle user and profile creation."""
         # data.pop('password_confirmation')
+        # role = RoleAdmin.objects.get_or_create(name='admin')
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
