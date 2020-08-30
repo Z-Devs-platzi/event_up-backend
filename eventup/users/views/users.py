@@ -21,6 +21,9 @@ from eventup.users.serializers import (
     UserSignUpSerializer
 )
 
+# Complements
+from eventup.utils.interface.responses import CustomActions
+
 # Models
 from eventup.users.models import User
 
@@ -47,35 +50,50 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAuthenticated]
         return [p() for p in permissions]
 
+
+    # users/login
     @action(detail=False, methods=['post'])
     def login(self, request):
-        """User sign in."""
+        """Handle HTTP POST request."""
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
         data = {
             'user': UserModelSerializer(user).data,
-            'access_token': token
+            'authToken': token
         }
-        return Response(data, status=status.HTTP_201_CREATED)
+        return CustomActions().custom_response(status.HTTP_200_OK, True, 'Login Success', data)
 
+    # users/signup
     @action(detail=False, methods=['post'])
     def signup(self, request):
-        """User sign up."""
+        """Handle HTTP POST request."""
+        # Make Serializer and Set Data
         serializer = UserSignUpSerializer(data=request.data)
+        # Validate Model
         serializer.is_valid(raise_exception=True)
+        # Save Object
         user = serializer.save()
-        data = UserModelSerializer(user).data
-        return Response(data, status=status.HTTP_201_CREATED)
+        # Return User
+        email = UserModelSerializer(user).data.get('email')
+        # Get Status
+        return CustomActions().custom_response(status.HTTP_201_CREATED, True, 'Singup Success', {"email": email})
 
-    @action(detail=False, methods=['post'])
-    def verify(self, request):
-        """Account verification."""
-        serializer = AccountVerificationSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        data = {'message': 'Congratulation, now go share some rides!'}
-        return Response(data, status=status.HTTP_200_OK)
+    @action(detail=False, methods=['get'])
+    def verify(self, request, *args, **kwargs):
+        """Handle HTTP GET request."""
+        message = 'Not found data'
+        status_custom = False
+        token = request.query_params.get('token')
+        if token:
+            serializer = AccountVerificationSerializer(data={'token': token})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            status_custom = True
+            message = 'Congratulation, now go share some rides!'
+        return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
+
+
 
     @action(detail=True, methods=['put', 'patch'])
     def profile(self, request, *args, **kwargs):

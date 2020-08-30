@@ -10,11 +10,11 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
-# Models
-from eventup.users.models import User, Profile
-
 # Tasks
 from eventup.taskapp.tasks import send_confirmation_email
+
+# Models
+from eventup.users.models import User, Profile
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
@@ -34,7 +34,8 @@ class UserModelSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'username',
-            'name',
+            'first_name',
+            'last_name',
             'email',
             'profile'
         )
@@ -55,18 +56,12 @@ class UserSignUpSerializer(serializers.Serializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
-    # Phone number
-    phone_regex = RegexValidator(
-        regex=r'\+?1?\d{9,15}$',
-        message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
-    )
-    phone_number = serializers.CharField(validators=[phone_regex])
-
     # Password
     password = serializers.CharField(min_length=8, max_length=64)
 
     # Name
-    name = serializers.CharField(min_length=2, max_length=30)
+    first_name = serializers.CharField(min_length=2, max_length=30)
+    last_name = serializers.CharField(min_length=2, max_length=30)
 
     def validate(self, data):
         """Verify passwords match."""
