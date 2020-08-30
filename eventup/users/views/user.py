@@ -5,11 +5,11 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 
 # Permissions
-# from rest_framework.permissions import (
-#     AllowAny,
-#     IsAuthenticated
-# )
-# from eventup.users.permissions import IsAccountOwner
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated
+)
+from eventup.users.permissions import IsAccountOwner
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
@@ -40,15 +40,16 @@ class UserViewSet(mixins.RetrieveModelMixin,
     serializer_class = UserModelSerializer
     lookup_field = 'username'
 
-    # def get_permissions(self):
-    #     """Assign permissions based on action."""
-    #     if self.action in ['signup', 'login', 'verify']:
-    #         permissions = [AllowAny]
-    #     elif self.action in ['retrieve', 'update', 'partial_update', 'profile']:
-    #         permissions = [IsAuthenticated, IsAccountOwner]
-    #     else:
-    #         permissions = [IsAuthenticated]
-    #     return [permission() for permission in permissions]
+    def get_permissions(self):
+        """Assign permissions based on action."""
+        if self.action:
+            if self.action in ['signup', 'login', 'verify']:
+                permissions = [AllowAny]
+            elif self.action in ['partial_update', 'profile']:
+                permissions = [IsAuthenticated, IsAccountOwner]
+            else:
+                permissions = [IsAuthenticated]
+            return [permission() for permission in permissions]
 
     # users/login
 
@@ -110,8 +111,24 @@ class UserViewSet(mixins.RetrieveModelMixin,
         # Get Status
         return self.custom_actions.custom_response(data)
 
-    @action(detail=True, methods=['put', 'patch'])
+    @action(detail=False, methods=['get'])
     def profile(self, request, *args, **kwargs):
+        """Get profile data."""
+        # Get Data
+        user = request.user
+        # Validate Model
+        if not user:
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Not found data')
+        else:
+            # Get Object
+            content = UserModelSerializer(user).data
+            # Return User
+            data = self.custom_actions.set_response(status.HTTP_200_OK, 'Get info User!', content)
+        # Get Status
+        return self.custom_actions.custom_response(data)
+
+    @action(detail=True, methods=['put', 'patch'])
+    def update_profile(self, request, *args, **kwargs):
         """Update profile data."""
         # Get Data
         user = self.get_object()
