@@ -4,7 +4,6 @@
 from rest_framework import serializers
 
 # Models
-
 from eventup.event_templates.models import Layout
 
 

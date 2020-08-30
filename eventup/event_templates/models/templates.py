@@ -10,7 +10,7 @@ class Template(GeneralModel):
     """ Template Model """
 
     name = models.CharField(max_length=100, unique=True, blank=True)
-    colors = models.TextField()
+    colors = models.CharField(max_length=255)
     banner = models.URLField()
     font = models.CharField(max_length=100, blank=True)
 
