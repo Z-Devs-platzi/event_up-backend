@@ -1,10 +1,10 @@
 """User model."""
 
-# Django
+# Django
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Utilities
+# Utilities
 from eventup.utils.models import GeneralModel
 
 
@@ -40,7 +40,7 @@ class User(GeneralModel, AbstractUser):
     )
 
     # Foreign Keys
-    role_admin = models.OneToOneField('users.RoleAdmin', on_delete=models.CASCADE, default=1)
+    # role_admin = models.OneToOneField('users.RoleAdmin', on_delete=models.CASCADE)
 
     # Fields Elements
     USERNAME_FIELD = 'email'
