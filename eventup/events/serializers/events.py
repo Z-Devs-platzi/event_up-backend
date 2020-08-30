@@ -25,3 +25,14 @@ class EventModelSerializer(serializers.ModelSerializer):
             'sponsor',
             'schedule',
         )
+
+
+class EventCreateSerializer(serializers.Serializer):
+    """ Event create serializer """
+
+    name = serializers.CharField()
+
+    def create(self, data):
+        event = Event.objects.create(**data)
+
+        return event
