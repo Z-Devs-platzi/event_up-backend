@@ -1,4 +1,4 @@
-"""Community URLs."""
+"""ORganization URLs."""
 
 # Django
 from django.urls import include, path
@@ -7,11 +7,11 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 # Views
-from eventup.communities.views import community as community_views
+from eventup.organization.views import organization as organization_view
 
 
 router = DefaultRouter()
-router.register(r'community', community_views.CommunityViewSet, basename='community')
+router.register(r'organization', organization_view.OrganizationViewSet, basename='organization')
 
 # router.register(r'users/verify/<str:code>/', user_views.UserViewSet)
 

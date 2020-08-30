@@ -53,7 +53,7 @@ LOCAL_APPS = [
     'eventup.users.apps.UsersAppConfig',
     'eventup.events.apps.EventAppConfig',
     'eventup.event_templates.apps.TemplateAppConfig',
-    'eventup.communities.apps.CommunityAppConfig'
+    'eventup.organization.apps.OrganizationAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

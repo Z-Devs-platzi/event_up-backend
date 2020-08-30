@@ -1,17 +1,17 @@
-"""Community views."""
+"""Organization views."""
 
 # Django REST Framework
 from rest_framework import status, viewsets
 
 # Serializers
-from eventup.communities.serializers import CommunityCreateSerializer
+from eventup.organization.serializers import OrganizationCreateSerializer
 
 
 from eventup.utils.interface.responses import CustomActions
 
 
-class CommunityViewSet(viewsets.GenericViewSet):
-    """ Community view set
+class OrganizationViewSet(viewsets.GenericViewSet):
+    """ Organization view set
 
         Crud for template
     """
@@ -20,13 +20,13 @@ class CommunityViewSet(viewsets.GenericViewSet):
         """ Handle HTTP POST request """
 
         status_custom = False
-        message = 'Error to create a new Community'
-        serializer = CommunityCreateSerializer(data=request.data)
+        message = 'Error to create a new Organization'
+        serializer = OrganizationCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        community = serializer.save()
+        organization = serializer.save()
 
-        if community:
+        if organization:
             status_custom = True
-            message = "Community created with success"
+            message = "Organization created with success"
 
         return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)

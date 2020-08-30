@@ -1,4 +1,4 @@
-""" Communities Model """
+""" Organization Model """
 
 from django.db import models
 
@@ -7,7 +7,7 @@ from django.db import models
 from eventup.utils.models import GeneralModel
 
 
-class Community(GeneralModel):
+class Organization(GeneralModel):
 
     name = models.CharField(max_length=100, blank=True)
     social_url = models.URLField(max_length=255)
