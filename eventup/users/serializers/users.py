@@ -3,7 +3,6 @@
 # Django
 from django.conf import settings
 from django.contrib.auth import password_validation, authenticate
-from django.core.validators import RegexValidator
 
 # Django REST Framework
 from rest_framework import serializers

@@ -50,8 +50,8 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAuthenticated]
         return [p() for p in permissions]
 
-
     # users/login
+
     @action(detail=False, methods=['post'])
     def login(self, request):
         """Handle HTTP POST request."""
@@ -92,8 +92,6 @@ class UserViewSet(mixins.RetrieveModelMixin,
             status_custom = True
             message = 'Congratulation, now go share some rides!'
         return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
-
-
 
     @action(detail=True, methods=['put', 'patch'])
     def profile(self, request, *args, **kwargs):
