@@ -19,3 +19,14 @@ class ScheduleModelSerializer(serializers.ModelSerializer):
             'description',
             'expostiors',
         )
+
+
+class ScheduleCreateSerializer(serializers.Serializer):
+    """ Schedule create serializer """
+
+    title = serializers.CharField()
+
+    def create(self, data):
+        schedule = Schedule.objects.create(**data)
+
+        return schedule
