@@ -7,11 +7,13 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 # Views
+from eventup.events.views import events as events_views
 from eventup.events.views import expositors as expositors_views
 from eventup.events.views import sponsors as sponsors_views
 from eventup.events.views import schedule as schedule_views
 
 router = DefaultRouter()
+router.register(r'event', events_views.EventViewSet, basename='event')
 router.register(r'expositor', expositors_views.ExpositorViewSet, basename='expositor')
 router.register(r'sponsor', sponsors_views.SponsorViewSet, basename='sponsor')
 router.register(r'schedule', schedule_views.ScheduleViewSet, basename='schedule')

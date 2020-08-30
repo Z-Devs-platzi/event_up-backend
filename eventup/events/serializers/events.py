@@ -31,6 +31,11 @@ class EventCreateSerializer(serializers.Serializer):
     """ Event create serializer """
 
     name = serializers.CharField()
+    date = serializers.DateTimeField()
+    description = serializers.CharField()
+    url = serializers.URLField()
+    banner_img = serializers.ImageField()
+    banner_title = serializers.CharField()
 
     def create(self, data):
         event = Event.objects.create(**data)
