@@ -14,20 +14,29 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
         """ Meta class """
         model = Organization
         fields = (
+            'pk',
             'name',
             'social_url',
             'logo'
         )
 
+    def validate(self, data):
 
-class OrganizationCreateSerializer(serializers.Serializer):
-    """ Organization create serializer """
-
-    name = serializers.CharField()
-    social_url = serializers.URLField()
-    logo = serializers.ImageField
+        response = data
+        return response
 
     def create(self, data):
-        organization = Organization.objects.create(**data)
+        return Organization.objects.create(**data)
 
-        return organization
+    def update(self, instance, validated_data):
+        organization_validated_data = validated_data.pop('organization', None)
+
+        organization = instance.organization
+        organization.name = organization_validated_data.get('name', organization.name)
+        organization.social_url = organization_validated_data.get('social_url', organization.social_url)
+        organization.logo = organization_validated_data.get('logo', organization.logo)
+
+        organization.save()
+
+        instance.save()
+        return instance
