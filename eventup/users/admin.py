@@ -5,13 +5,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Models
-from eventup.users.models import Users, Profile
+from eventup.users.models import User, Profile
 
 
 class CustomUserAdmin(UserAdmin):
     """User model admin."""
 
-    list_display = ('email', 'username', 'name', 'is_staff', 'is_client')
+    list_display = ('email', 'username', 'is_staff', 'is_client')
     list_filter = ('is_client', 'is_staff', 'created', 'modified')
 
 
@@ -21,6 +21,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_display = ('user',)
     search_fields = ('user__username', 'user__email', 'user__name')
+    # list_filter = ('reputation',)
 
 
-admin.site.register(Users, CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)

@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 
 # Models
-from eventup.users.models import Users
+from eventup.users.models import User
 # from eventup.rides.models import Ride
 
 # Celery
@@ -35,7 +35,7 @@ def gen_verification_token(user):
 @task(name='send_confirmation_email', max_retries=3)
 def send_confirmation_email(user_pk):
     """Send account verification link to given user."""
-    user = Users.objects.get(pk=user_pk)
+    user = User.objects.get(pk=user_pk)
     verification_token = gen_verification_token(user)
     subject = 'Welcome @{}! Verify your account to start using Event Up'.format(user.username)
     from_email = 'Event Up <noreply@eventup.codes>'

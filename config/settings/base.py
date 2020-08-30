@@ -31,7 +31,7 @@ ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Users & Authentication
-AUTH_USER_MODEL = 'users.Users'
+AUTH_USER_MODEL = 'users.User'
 
 # Apps
 DJANGO_APPS = [
@@ -44,17 +44,16 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    # 'django_filters'
 ]
-
 LOCAL_APPS = [
     'eventup.users.apps.UsersAppConfig',
     'eventup.events.apps.EventAppConfig',
     'eventup.event_templates.apps.TemplateAppConfig',
-    'eventup.communities.apps.CommunityAppConfig'
 ]
-
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # Passwords
@@ -82,9 +81,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Middlewares
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # new
+    'django.middleware.common.CommonMiddleware',  # new
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -133,24 +133,6 @@ TEMPLATES = [
     },
 ]
 
-# Django REST Framework
-REST_FRAMEWORK = {
-    # Framework
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    ),
-    # Authentication
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
-    # Pagination
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
-}
-
 # Security
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
@@ -178,3 +160,35 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERYD_TASK_TIME_LIMIT = 5 * 60
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
+
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+# # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:8000',
+#     'http://localhost:3000',
+# ]
+# # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
+# CORS_ORIGIN_REGEX_WHITELIST = [
+#     'http://localhost:8000',
+#     'http://localhost:3000',
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:9000",
+#     "http://127.0.0.1:3000"
+# ]
