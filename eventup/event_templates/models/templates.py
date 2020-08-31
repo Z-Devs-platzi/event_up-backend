@@ -22,7 +22,7 @@ class Template(GeneralModel):
     # Templates Relations
     layout = models.ForeignKey(
         to="Layout",
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
     )
 

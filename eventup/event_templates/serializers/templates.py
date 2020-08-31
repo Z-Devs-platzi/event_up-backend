@@ -3,6 +3,7 @@
 # Django REST Framework
 from rest_framework import serializers
 
+
 # Models
 from eventup.event_templates.models import Template
 
@@ -19,7 +20,7 @@ class TemplateModelSerializer(serializers.HyperlinkedModelSerializer):
             'colors',
             'banner',
             'font',
-            'layout',
+            # 'layout',
         )
 
     def validate(self, data):

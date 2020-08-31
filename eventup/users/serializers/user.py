@@ -15,7 +15,7 @@ from eventup.taskapp.tasks import send_confirmation_email
 
 # Models
 from eventup.users.models import User, Profile
-from eventup.organization.models import Organization
+# from eventup.organization.models import Organization
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
