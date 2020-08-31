@@ -15,9 +15,11 @@ from eventup.taskapp.tasks import send_confirmation_email
 
 # Models
 from eventup.users.models import User, Profile
+from eventup.organization.models import Organization
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
+# from eventup.organization.serializers import OrganizationModelSerializer
 
 # Utilities
 import jwt
@@ -27,6 +29,7 @@ class UserModelSerializer(serializers.ModelSerializer):
     """User model serializer."""
 
     profile = ProfileModelSerializer(read_only=True)
+    # organization = OrganizationModelSerializer(read_only=True)
 
     class Meta:
         """Meta class."""
@@ -37,7 +40,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email',
-            'profile'
+            'profile',
+            # 'organization',
         )
 
 
@@ -76,6 +80,9 @@ class UserSignUpSerializer(serializers.Serializer):
         """Handle user and profile creation."""
         # data.pop('password_confirmation')
         # role = RoleAdmin.objects.get_or_create(name='admin')
+
+        # organization = Organization.objects.create(name=data.name)
+        # user = User.objects.create_user(**data, is_verified=False, is_client=True, organization=organization)
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)

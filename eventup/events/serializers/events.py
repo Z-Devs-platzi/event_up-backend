@@ -15,14 +15,14 @@ class EventModelSerializer(serializers.HyperlinkedModelSerializer):
 
         model = Event
         fields = (
-            'pk',
+            'id',
             'name',
             'date',
             'description',
             'url',
             'banner_img',
             'banner_title',
-            'template',
+            # 'template',
             # 'sponsor',
             # 'schedule',
         )

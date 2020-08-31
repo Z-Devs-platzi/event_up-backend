@@ -14,7 +14,7 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
         """ Meta class """
         model = Organization
         fields = (
-            'pk',
+            'id',
             'name',
             'social_url',
             'logo'

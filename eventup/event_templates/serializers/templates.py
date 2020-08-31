@@ -14,11 +14,12 @@ class TemplateModelSerializer(serializers.HyperlinkedModelSerializer):
         """ Meta class """
         model = Template
         fields = (
-            'pk',
+            'id',
             'name',
             'colors',
             'banner',
-            'font'
+            'font',
+            'layout',
         )
 
     def validate(self, data):

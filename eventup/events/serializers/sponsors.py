@@ -14,7 +14,7 @@ class SponsorModelSerializer(serializers.HyperlinkedModelSerializer):
         """ Meta class """
         model = Sponsor
         fields = (
-            'pk',
+            'id',
             'name',
             'level',
             'web',

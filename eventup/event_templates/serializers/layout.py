@@ -14,7 +14,7 @@ class LayoutModelSerializer(serializers.HyperlinkedModelSerializer):
         """ Meta class """
         model = Layout
         fields = (
-            'pk',
+            'id',
             'comment',
         )
 

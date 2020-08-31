@@ -14,7 +14,7 @@ class ScheduleModelSerializer(serializers.HyperlinkedModelSerializer):
         """ Meta class """
         model = Schedule
         fields = (
-            'pk',
+            'id',
             'title',
             'date',
             'description',

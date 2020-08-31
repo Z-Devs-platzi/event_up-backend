@@ -25,6 +25,8 @@ class TemplateViewSet(mixins.CreateModelMixin,
     queryset = Template.objects.all()
     serializer_class = TemplateModelSerializer
 
+    # def create(self, request):
+
     def get_permissions(self):
         """Assign permission based on action."""
 

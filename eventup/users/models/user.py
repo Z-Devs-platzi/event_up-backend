@@ -40,6 +40,12 @@ class User(GeneralModel, AbstractUser):
     )
 
     # Foreign Keys
+
+    # organization = models.ForeignKey(
+    #     to="organization.Organization",
+    #     on_delete=models.CASCADE,
+    # )
+
     # role_admin = models.OneToOneField('users.RoleAdmin', on_delete=models.CASCADE)
 
     # Fields Elements
