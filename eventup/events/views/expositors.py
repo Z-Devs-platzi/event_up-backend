@@ -29,7 +29,7 @@ class ExpositorViewSet(mixins.CreateModelMixin,
     queryset = Expositor.objects.all()
     serializer_class = ExpositorModelSerializer
 
-    def get_permissions(self): # noqa
+    def get_permissions(self):  # noqa
         """Assign permission based on action."""
         permissions = [IsAuthenticated]
         # if self.action in ['update', 'partial_update', 'finish']:

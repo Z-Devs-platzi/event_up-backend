@@ -8,6 +8,8 @@ from eventup.events.models import Expositor
 
 
 class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
+    """ Expositor model serializer """
+
     id = serializers.CharField(source='pk', read_only=True)
 
     class Meta:

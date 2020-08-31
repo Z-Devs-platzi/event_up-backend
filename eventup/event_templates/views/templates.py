@@ -1,32 +1,38 @@
 """Layout views."""
 
 # Django REST Framework
-from rest_framework import status, viewsets
+from rest_framework import viewsets
+from rest_framework import mixins
 
 # Serializers
-from eventup.event_templates.serializers import TemplateCreateSerializer
+from eventup.event_templates.serializers import TemplateModelSerializer
+from eventup.event_templates.models import Template
 
 
-from eventup.utils.interface.responses import CustomActions
+# Permissions
+from rest_framework.permissions import IsAuthenticated
 
 
-class TemplateViewSet(viewsets.GenericViewSet):
+class TemplateViewSet(mixins.CreateModelMixin,
+                      mixins.ListModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
     """ Template view set
 
         Crud for templates
      """
 
-    def create(self, request, *args, **kwargs):
-        """ Handle HTTP POST request """
+    queryset = Template.objects.all()
+    serializer_class = TemplateModelSerializer
 
-        status_custom = False
-        message = 'Error to create a new Template'
-        serializer = TemplateCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        template = serializer.save()
+    def get_permissions(self):
+        """Assign permission based on action."""
 
-        if template:
-            status_custom = True
-            message = "Template created with success"
+        permissions = [IsAuthenticated]
+        return [permission() for permission in permissions]
 
-        return CustomActions().custom_response(status.HTTP_200_OK, status_custom, message)
+    def get_queryset(self):
+        """Restrict list to public-only."""
+        if self.action == 'list':
+            return self.queryset.filter(status='active')
+        return self.queryset
