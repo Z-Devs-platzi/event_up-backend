@@ -33,17 +33,22 @@ def gen_verification_token(user):
 
 
 @task(name='send_confirmation_email', max_retries=3)
-def send_confirmation_email(user_pk):
+def send_confirmation_email(email):
     """Send account verification link to given user."""
-    user = User.objects.get(pk=user_pk)
+    print("..**" * 40)
+    user = User.objects.get(email=email)
+    print(email)
+    print(user.email)
+    print("..**" * 40)
+
     verification_token = gen_verification_token(user)
     subject = 'Welcome @{}! Verify your account to start using Event Up'.format(user.username)
-    from_email = 'Event Up <noreply@eventup.codes>'
+    from_email = 'Event Up <mailgun@mg.event-up.digital>'
     content = render_to_string(
         'emails/users/account_verification.html',
         {'token': verification_token, 'user': user}
     )
-    msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
+    msg = EmailMultiAlternatives(subject, content, from_email, [email])
     msg.attach_alternative(content, "text/html")
     msg.send()
 

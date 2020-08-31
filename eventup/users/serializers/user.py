@@ -78,7 +78,7 @@ class UserSignUpSerializer(serializers.Serializer):
         # role = RoleAdmin.objects.get_or_create(name='admin')
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
-        send_confirmation_email.delay(user_pk=user.pk)
+        send_confirmation_email.delay(email=user.email)
         return user
 
 
