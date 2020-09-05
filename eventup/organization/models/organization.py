@@ -1,4 +1,4 @@
-''' Expositors Model '''
+''' Organizations Model '''
 
 import uuid
 from django.db import models
@@ -8,12 +8,12 @@ from eventup.utils.models import GeneralModel
 
 
 class Organization(GeneralModel):
-    ''' Expositor Model '''
+    ''' Organization Model '''
 
     # Id
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    # Expositor data
+    # Organization data
     name = models.CharField('name of organization', max_length=100)
     social_url = models.URLField(max_length=255, blank=True)
     picture = models.ImageField(
@@ -23,7 +23,8 @@ class Organization(GeneralModel):
         null=True
     )
 
-    # Expositors Relations
+    # Organizations Relations
+    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
