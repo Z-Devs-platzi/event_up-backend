@@ -8,7 +8,7 @@ from rest_framework.validators import UniqueValidator
 from eventup.events.models import Expositor
 
 
-class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
+class ExpositorModelSerializer(serializers.ModelSerializer):
     """ Expositor model serializer """
 
     id = serializers.CharField(source='pk', read_only=True)
@@ -22,26 +22,27 @@ class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'id',
             'name',
+            'email_expositor',
             'biography',
             'twitter',
             'picture'
         )
 
 
-class CreateExpositorSerializer(serializers.ModelSerializer):
+class CreateExpositorSerializer(ExpositorModelSerializer):
     """Create expositor serializer."""
 
-    email = serializers.EmailField(
+    email_expositor = serializers.EmailField(
         validators=[UniqueValidator(queryset=Expositor.objects.all())]
     )
 
-    def validate(self, data):
-        """Validate.
+    # def validate(self, data):
+    #     """Validate.
 
-        Verify that the person who offers the expositor is real.
-        """
-        # expositor = self.context['expositor']
-        return data
+    #     Verify that the person who offers the expositor is real.
+    #     """
+    #     # expositor = self.context['expositor']
+    #     return data
 
     # def create(self, data):
     #     """Create expositor and update stats."""

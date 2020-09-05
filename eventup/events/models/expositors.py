@@ -15,7 +15,7 @@ class Expositor(GeneralModel):
 
     # Expositor data
     name = models.CharField('name of expositor', max_length=100)
-    email = models.EmailField(
+    email_expositor = models.EmailField(
         'email address',
         unique=True,
         error_messages={

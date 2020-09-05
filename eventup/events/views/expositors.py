@@ -1,9 +1,8 @@
 """Expositors views."""
 
 # Django REST Framework
-from rest_framework import viewsets
-from rest_framework import mixins
-from rest_framework.generics import get_object_or_404
+from rest_framework import mixins, status, viewsets
+# from rest_framework.generics import get_object_or_404
 
 # Model
 from eventup.events.models import Expositor
@@ -18,7 +17,7 @@ from eventup.events.serializers import (
 from rest_framework.permissions import IsAuthenticated
 
 # Actions / Utils
-# from eventup.utils.interface.responses import CustomActions
+from eventup.utils.interface.responses import CustomActions
 
 
 class ExpositorViewSet(mixins.ListModelMixin,
@@ -30,6 +29,7 @@ class ExpositorViewSet(mixins.ListModelMixin,
 
        Crud for a expositors
     """
+    custom_actions = CustomActions()
     queryset = Expositor.objects.all()
     serializer_class = ExpositorModelSerializer
 
@@ -38,24 +38,28 @@ class ExpositorViewSet(mixins.ListModelMixin,
         permissions = [IsAuthenticated]
         return [permission() for permission in permissions]
 
-    # def get_serializer_context(self):
-    #     """Add expositor to serializer context."""
-    #     context = super(ExpositorViewSet, self).get_serializer_context()
-    #     context['expositor'] = self.expositor
-    #     return context
+    def get_serializer_class(self):
+        """Return serializer based on action."""
+        if self.action == 'create':
+            return CreateExpositorSerializer
+        return ExpositorModelSerializer
 
-    # # def dispatch(self, request, *args, **kwargs):
-    # #     """Verify that the Expositor exists."""
-    # #     print(request, args, kwargs)
-    # #     # email = args['email']
-    # #     # self.expositor = get_object_or_404(Expositor, email=email)
-    # #     return super(ExpositorViewSet, self).dispatch(request, *args, **kwargs)
-
-    # def get_serializer_class(self):
-    #     """Return serializer based on action."""
-    #     if self.action == 'create':
-    #         return CreateExpositorSerializer
-    #     return ExpositorModelSerializer
+    def create(self, request):
+        """Handle HTTP POST request."""
+        # Make Serializer and Set Data
+        serializer = CreateExpositorSerializer(data=request.data)
+        # Validate Model
+        if not serializer.is_valid():
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST,
+                                                    'Error to make Expositor', serializer.errors)
+        else:
+            # Save Object
+            user = serializer.save()
+            # Return User
+            content = {"email": ExpositorModelSerializer(user).data.get('email_expositor')}
+            data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Expositor create Success!', content)
+        # Get Status
+        return self.custom_actions.custom_response(data)
 
     # def get_queryset(self):
     #     """Restrict list to public-only."""
