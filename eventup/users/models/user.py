@@ -39,9 +39,6 @@ class User(GeneralModel, AbstractUser):
         help_text='Set to true when the user have verified its email address.'
     )
 
-    # Foreign Keys
-    # role_admin = models.OneToOneField('users.RoleAdmin', on_delete=models.CASCADE)
-
     # Fields Elements
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

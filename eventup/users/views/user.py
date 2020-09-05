@@ -9,7 +9,7 @@ from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated
 )
-from eventup.users.permissions import IsAccountOwner
+from eventup.users.permissions.user import IsAccountOwner
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
