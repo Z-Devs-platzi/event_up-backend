@@ -17,6 +17,10 @@ from eventup.events.serializers import (
 from rest_framework.permissions import IsAuthenticated
 
 # Actions / Utils
+from eventup.utils import (
+    CustomRetrieveModelMixin,
+    CustomListModelMixin
+)
 from eventup.utils.interface.responses import CustomActions
 
 
@@ -25,7 +29,8 @@ from eventup.utils.interface.responses import CustomActions
 #                        mixins.RetrieveModelMixin,
 #                        mixins.UpdateModelMixin,
 #                        viewsets.GenericViewSet):
-class ExpositorViewSet(mixins.ListModelMixin,
+class ExpositorViewSet(CustomListModelMixin,
+                       CustomRetrieveModelMixin,
                        mixins.UpdateModelMixin,
                        viewsets.GenericViewSet):
     """Expositor view set.
@@ -61,20 +66,5 @@ class ExpositorViewSet(mixins.ListModelMixin,
             # Return User
             content = {"email": ExpositorModelSerializer(user).data.get('email_expositor')}
             data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Expositor create Success!', content)
-        # Get Status
-        return self.custom_actions.custom_response(data)
-
-    def retrieve(self, request, *args, **kwargs):
-        data = None
-        try:
-            instance = self.get_object()
-        except Exception:
-            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Not found data')
-
-        if not data:
-            # Get Object
-            content = self.get_serializer(instance).data
-            # Return Data
-            data = self.custom_actions.set_response(status.HTTP_200_OK, 'Get info of the Expositor!', content)
         # Get Status
         return self.custom_actions.custom_response(data)
