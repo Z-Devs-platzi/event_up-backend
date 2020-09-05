@@ -22,7 +22,7 @@ class ExpositorModelSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'id',
             'name',
-            'bio',
+            'biography',
             'twitter',
             'picture'
         )
@@ -43,10 +43,11 @@ class CreateExpositorSerializer(serializers.ModelSerializer):
         # expositor = self.context['expositor']
         return data
 
-    def create(self, data):
-        """Create expositor and update stats."""
-        # expositor = self.context['expositor']
-        expositor = Expositor.objects.create(**data)
-        expositor.save()
+    # def create(self, data):
+    #     """Create expositor and update stats."""
+    #     # expositor = self.context['expositor']
+    #     print(data)
+    #     expositor = Expositor.objects.create(**data)
+    #     expositor.save()
 
-        return expositor
+    #     return expositor
