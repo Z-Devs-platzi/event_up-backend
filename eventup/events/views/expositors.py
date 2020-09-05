@@ -20,9 +20,12 @@ from rest_framework.permissions import IsAuthenticated
 from eventup.utils.interface.responses import CustomActions
 
 
+# class ExpositorViewSet(mixins.ListModelMixin,
+#                        mixins.CreateModelMixin,
+#                        mixins.RetrieveModelMixin,
+#                        mixins.UpdateModelMixin,
+#                        viewsets.GenericViewSet):
 class ExpositorViewSet(mixins.ListModelMixin,
-                       mixins.CreateModelMixin,
-                       mixins.RetrieveModelMixin,
                        mixins.UpdateModelMixin,
                        viewsets.GenericViewSet):
     """Expositor view set.
@@ -61,18 +64,17 @@ class ExpositorViewSet(mixins.ListModelMixin,
         # Get Status
         return self.custom_actions.custom_response(data)
 
-    # def get_queryset(self):
-    #     """Restrict list to public-only."""
-    #     if self.action == 'list':
-    #         return self.queryset.filter(status='active')
-    #     return self.queryset
+    def retrieve(self, request, *args, **kwargs):
+        data = None
+        try:
+            instance = self.get_object()
+        except Exception:
+            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST, 'Not found data')
 
-    #     # """Return active circle's Expositors."""
-    #     # if self.action not in ['finish', 'retrieve']:
-    #     #     offset = timezone.now() + timedelta(minutes=10)
-    #     #     return self.circle.Expositor_set.filter(
-    #     #         departure_date__gte=offset,
-    #     #         is_active=True,
-    #     #         available_seats__gte=1
-    #     #     )
-    #     # return self.expositor.Expositor_set.all()
+        if not data:
+            # Get Object
+            content = self.get_serializer(instance).data
+            # Return Data
+            data = self.custom_actions.set_response(status.HTTP_200_OK, 'Get info of the Expositor!', content)
+        # Get Status
+        return self.custom_actions.custom_response(data)

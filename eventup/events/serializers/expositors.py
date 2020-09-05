@@ -35,20 +35,3 @@ class CreateExpositorSerializer(ExpositorModelSerializer):
     email_expositor = serializers.EmailField(
         validators=[UniqueValidator(queryset=Expositor.objects.all())]
     )
-
-    # def validate(self, data):
-    #     """Validate.
-
-    #     Verify that the person who offers the expositor is real.
-    #     """
-    #     # expositor = self.context['expositor']
-    #     return data
-
-    # def create(self, data):
-    #     """Create expositor and update stats."""
-    #     # expositor = self.context['expositor']
-    #     print(data)
-    #     expositor = Expositor.objects.create(**data)
-    #     expositor.save()
-
-    #     return expositor
