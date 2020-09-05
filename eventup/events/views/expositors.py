@@ -18,8 +18,11 @@ from rest_framework.permissions import IsAuthenticated
 
 # Actions / Utils
 from eventup.utils import (
+    CustomCreateModelMixin,
     CustomRetrieveModelMixin,
-    CustomListModelMixin
+    CustomListModelMixin,
+    CustomUpdateModelMixin,
+    CustomDestroyModelMixin
 )
 from eventup.utils.interface.responses import CustomActions
 
@@ -29,9 +32,12 @@ from eventup.utils.interface.responses import CustomActions
 #                        mixins.RetrieveModelMixin,
 #                        mixins.UpdateModelMixin,
 #                        viewsets.GenericViewSet):
-class ExpositorViewSet(CustomListModelMixin,
+class ExpositorViewSet(
+                       CustomCreateModelMixin,
                        CustomRetrieveModelMixin,
-                       mixins.UpdateModelMixin,
+                       CustomListModelMixin,
+                       CustomUpdateModelMixin,
+                       CustomDestroyModelMixin,
                        viewsets.GenericViewSet):
     """Expositor view set.
 
@@ -51,20 +57,3 @@ class ExpositorViewSet(CustomListModelMixin,
         if self.action == 'create':
             return CreateExpositorSerializer
         return ExpositorModelSerializer
-
-    def create(self, request):
-        """Handle HTTP POST request."""
-        # Make Serializer and Set Data
-        serializer = CreateExpositorSerializer(data=request.data)
-        # Validate Model
-        if not serializer.is_valid():
-            data = self.custom_actions.set_response(status.HTTP_400_BAD_REQUEST,
-                                                    'Error to make Expositor', serializer.errors)
-        else:
-            # Save Object
-            user = serializer.save()
-            # Return User
-            content = {"email": ExpositorModelSerializer(user).data.get('email_expositor')}
-            data = self.custom_actions.set_response(status.HTTP_201_CREATED, 'Expositor create Success!', content)
-        # Get Status
-        return self.custom_actions.custom_response(data)
