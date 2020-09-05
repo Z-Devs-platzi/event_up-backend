@@ -2,13 +2,22 @@
 
 # Rest Library
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 
 class CustomActions():
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
+
     def custom_response(self, response):
         status_data = response['status_code']
         response.pop('status_code')
-        return Response(response, status=status_data)
+        headers = self.get_success_headers(response)
+        return Response(response, status=status_data, headers=headers)
 
     def set_response(self, status_code, message=None, data=None, status=None):
         response = {
