@@ -13,8 +13,8 @@ from eventup.events.views import sponsors as sponsors_views
 from eventup.events.views import schedule as schedule_views
 
 router = DefaultRouter()
-router.register(r'event', events_views.EventViewSet, basename='event')
 router.register(r'expositor', expositors_views.ExpositorViewSet, basename='expositor')
+router.register(r'event', events_views.EventViewSet, basename='event')
 router.register(r'sponsor', sponsors_views.SponsorViewSet, basename='sponsor')
 router.register(r'schedule', schedule_views.ScheduleViewSet, basename='schedule')
 # router.register(r'users/verify/<str:code>/', user_views.UserViewSet)
