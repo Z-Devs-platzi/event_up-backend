@@ -1,7 +1,7 @@
 """Expositors views."""
 
 # Django REST Framework
-from rest_framework import mixins, status, viewsets
+from rest_framework import viewsets
 # from rest_framework.generics import get_object_or_404
 
 # Model
@@ -10,7 +10,7 @@ from eventup.events.models import Expositor
 # Serializers
 from eventup.events.serializers import (
     ExpositorModelSerializer,
-    CreateExpositorSerializer,
+    CreateUpdateExpositorSerializer,
 )
 
 # Permissions
@@ -33,12 +33,12 @@ from eventup.utils.interface.responses import CustomActions
 #                        mixins.UpdateModelMixin,
 #                        viewsets.GenericViewSet):
 class ExpositorViewSet(
-                       CustomCreateModelMixin,
-                       CustomRetrieveModelMixin,
-                       CustomListModelMixin,
-                       CustomUpdateModelMixin,
-                       CustomDestroyModelMixin,
-                       viewsets.GenericViewSet):
+        CustomCreateModelMixin,
+        CustomRetrieveModelMixin,
+        CustomListModelMixin,
+        CustomUpdateModelMixin,
+        CustomDestroyModelMixin,
+        viewsets.GenericViewSet):
     """Expositor view set.
 
        Crud for a expositors
@@ -54,6 +54,6 @@ class ExpositorViewSet(
 
     def get_serializer_class(self):
         """Return serializer based on action."""
-        if self.action == 'create':
-            return CreateExpositorSerializer
+        if self.action == ['create', 'update']:
+            return CreateUpdateExpositorSerializer
         return ExpositorModelSerializer

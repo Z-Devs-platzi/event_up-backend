@@ -29,7 +29,7 @@ class ExpositorModelSerializer(serializers.ModelSerializer):
         )
 
 
-class CreateExpositorSerializer(ExpositorModelSerializer):
+class CreateUpdateExpositorSerializer(ExpositorModelSerializer):
     """Create expositor serializer."""
 
     email_expositor = serializers.EmailField(

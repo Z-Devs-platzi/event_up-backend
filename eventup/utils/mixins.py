@@ -125,6 +125,7 @@ class CustomDestroyModelMixin:
     """
     Destroy a model instance.
     """
+
     def destroy(self, request, *args, **kwargs):
         data = None
         try:
