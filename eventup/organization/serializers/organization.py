@@ -1,7 +1,8 @@
-""" Organization Serializer """
+""" Organizations Serializer """
 
 # Django REST Framework
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 # Models
 from eventup.organization.models import Organization
@@ -10,33 +11,25 @@ from eventup.organization.models import Organization
 class OrganizationModelSerializer(serializers.ModelSerializer):
     """ Organization model serializer """
 
+    id = serializers.CharField(source='pk', read_only=True)
+
     class Meta:
-        """ Meta class """
+        """Meta class."""
+
+        fields = '__all__'
         model = Organization
+        # read_only_fields
         fields = (
-            'pk',
+            'id',
             'name',
             'social_url',
             'logo'
         )
 
-    def validate(self, data):
 
-        response = data
-        return response
+class CreateUpdateOrganizationSerializer(OrganizationModelSerializer):
+    """Create organization serializer."""
 
-    def create(self, data):
-        return Organization.objects.create(**data)
-
-    def update(self, instance, validated_data):
-        organization_validated_data = validated_data.pop('organization', None)
-
-        organization = instance.organization
-        organization.name = organization_validated_data.get('name', organization.name)
-        organization.social_url = organization_validated_data.get('social_url', organization.social_url)
-        organization.logo = organization_validated_data.get('logo', organization.logo)
-
-        organization.save()
-
-        instance.save()
-        return instance
+    social_url = serializers.CharField(
+        validators=[UniqueValidator(queryset=Organization.objects.all())]
+    )
