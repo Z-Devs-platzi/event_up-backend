@@ -78,9 +78,9 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def create(self, data):
         """Handle user and profile creation."""
-        user = User.objects.create_user(**data, is_verified=False, is_client=True)
+        organization = Organization.objects.create(name='asas')
+        user = User.objects.create_user(**data, is_verified=False, is_client=True, organization=organization)
         Profile.objects.create(user=user)
-        Organization.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
         return user
 

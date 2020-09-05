@@ -23,7 +23,7 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'social_url',
-            'logo'
+            # 'picture'
         )
 
 

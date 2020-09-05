@@ -39,6 +39,9 @@ class User(GeneralModel, AbstractUser):
         help_text='Set to true when the user have verified its email address.'
     )
 
+    # Relations
+    organization = models.ForeignKey('organization.Organization', on_delete=models.SET_NULL, null=True)
+
     # Fields Elements
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
