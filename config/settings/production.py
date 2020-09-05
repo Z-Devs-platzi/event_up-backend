@@ -7,6 +7,7 @@ from .base import env
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 ALLOWED_HOSTS = ['*']
 
+
 # Databases
 DATABASES['default'] = env.db('DATABASE_URL')  # NOQA
 DATABASES['default']['ATOMIC_REQUESTS'] = True  # NOQA

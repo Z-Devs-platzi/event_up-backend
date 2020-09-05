@@ -141,9 +141,6 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-# Email EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-# 'anymail.backends.mailgun.EmailBackend'
-
 # Email
 DEFAULT_FROM_EMAIL = env(
     'DJANGO_DEFAULT_FROM_EMAIL',
@@ -154,12 +151,14 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[Event Up]')
 
 # Anymail (Mailgun)
 INSTALLED_APPS += ['anymail']  # noqa F405
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='anymail.backends.mailgun.EmailBackend')
+# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='anymail.backends.mailgun.EmailBackend')
 ANYMAIL = {
-    'MAILGUN_API_KEY': env('MAILGUN_API_KEY'),
-    'MAILGUN_SENDER_DOMAIN': env('MAILGUN_DOMAIN')
+    'MAILGUN_API_KEY': env('MAILGUN_API_KEY', default=''),
+    'MAILGUN_SENDER_DOMAIN': env('MAILGUN_DOMAIN', default='')
 }
 
+# Domain
+MAIN_DOMAIN = env.list('MAIN_DOMAIN', default=['localhost:8000'])
 
 
 # Admin
