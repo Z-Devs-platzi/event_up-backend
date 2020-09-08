@@ -13,7 +13,7 @@ from eventup.utils.models import GeneralModel
 class Layout(GeneralModel):
     """ Layout Model """
     # Id
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.BigIntegerField(primary_key=True, editable=False)
 
     # Organization data
     comment = models.CharField('description of the component/layout base to the event', max_length=500)

@@ -1,5 +1,6 @@
 ''' Organizations Model '''
 
+import uuid
 from django.db import models
 
 # Utils Model
@@ -10,7 +11,7 @@ class Organization(GeneralModel):
     ''' Organization Model '''
 
     # Id
-    id = models.BigIntegerField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Organization data
     name = models.CharField('name of organization', max_length=100, unique=True,)
