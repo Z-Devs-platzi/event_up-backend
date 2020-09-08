@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from eventup.event_templates.models import Template
 
 # Serializers
-from eventup.event_templates.serializers.template import TemplateModelSerializer
+from eventup.event_templates.serializers.template import (TemplateModelSerializer, CreateUpdateTemplateSerializer)
 
 # Permissions
 from rest_framework.permissions import IsAuthenticated
@@ -46,6 +46,8 @@ class TemplateViewSet(
 
     def get_serializer_class(self):
         """Return serializer based on action."""
+        if self.action == ['create', 'update']:
+            return CreateUpdateTemplateSerializer
         return TemplateModelSerializer
 
     def get_queryset(self):

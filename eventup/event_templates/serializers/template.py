@@ -20,6 +20,29 @@ class TemplateModelSerializer(serializers.ModelSerializer):
         # read_only_fields
         fields = (
             'id',
-            'colors'
+            'colors',
+            'font',
+            'layout'
         )
 
+
+class CreateUpdateTemplateSerializer(TemplateModelSerializer):
+    """Create template serializer."""
+
+    colors = serializers.CharField(min_length=2, max_length=500)
+    font = serializers.CharField(min_length=2, max_length=500)
+    # Layout
+    layout_id = serializers.CharField(min_length=2, max_length=100)
+
+    def validate(self, data):
+        """Verify passwords match."""
+        # Check Template Name
+        if 'layout_id' in data and Template.objects.filter(pk=data['layout_id']):
+            raise serializers.ValidationError("The Id not exist.")
+        else:
+            data.update({'layout': Template.objects.get_by_id(data['layout_id'])})
+            del data['layout_id']
+
+    def create(self, data):
+        # return Template.objects.create(**data, code=random.randrange(1000, 9999))
+        return Template.objects.create(**data)
