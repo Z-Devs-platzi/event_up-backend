@@ -15,7 +15,6 @@ from eventup.taskapp.tasks import send_confirmation_email
 
 # Models
 from eventup.users.models import User, Profile
-from eventup.organization.models import Organization
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
@@ -69,7 +68,6 @@ class UserSignUpSerializer(serializers.Serializer):
     last_name = serializers.CharField(min_length=2, max_length=30)
 
     # Organization
-    organization = CreateUpdateOrganizationSerializer()
     name_organization = serializers.CharField(min_length=2, max_length=30, required=False)
 
     def validate(self, data):
@@ -83,8 +81,10 @@ class UserSignUpSerializer(serializers.Serializer):
         """Handle user and profile creation."""
         # Make organization
         if 'name_organization' in data:
-            data.organization = self.organization.create(name=data['name_organization'])
+            organization = CreateUpdateOrganizationSerializer()
+            organization_data = organization.create(data=data['name_organization'])
             del data['name_organization']
+            data.update({'organization': organization_data})
         # Make User
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)

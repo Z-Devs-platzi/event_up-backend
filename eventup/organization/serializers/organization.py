@@ -41,9 +41,12 @@ class CreateUpdateOrganizationSerializer(OrganizationModelSerializer):
     def validate(self, data):
         """Verify passwords match."""
         # Check Organization Name
-        if 'name_organization' in data and Organization.objects.filter(name=data['name_organization']):
+        if 'name_organization' in data and Organization.objects.filter(name=data):
             raise serializers.ValidationError("Another user already has this organization name.")
 
     def create(self, data):
-        data.code = random.randrange(1000, 9999)
-        return Organization.objects.create(**data)
+        print("===%%%%+++" * 15)
+        print(data)
+        print("===%%%%+++" * 15)
+        # return Organization.objects.create(**data, code=random.randrange(1000, 9999))
+        return Organization.objects.create(name=data, code=random.randrange(1000, 9999))
