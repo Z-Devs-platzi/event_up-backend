@@ -67,19 +67,29 @@ class UserSignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=2, max_length=30)
     last_name = serializers.CharField(min_length=2, max_length=30)
 
+    # Organization
+    name_organization = serializers.CharField(min_length=2, max_length=30, required=False)
+
     def validate(self, data):
         """Verify passwords match."""
+        # Check Organization Name
+        if 'name_organization' in data and Organization.objects.filter(name=data['name_organization']):
+            raise serializers.ValidationError("Another user already has this organization name.")
+        # Check Password
         passwd = data['password']
-        # passwd_conf = data['password_confirmation']
-        # if passwd != passwd_conf:
-        #     raise serializers.ValidationError("Passwords don't match.")
         password_validation.validate_password(passwd)
         return data
 
     def create(self, data):
         """Handle user and profile creation."""
-        organization = Organization.objects.create(name='asas')
-        user = User.objects.create_user(**data, is_verified=False, is_client=True, organization=organization)
+        # Make organization
+        if 'name_organization' in data:
+            organization = Organization.objects.create(name=data['name_organization'])
+            del data['name_organization']
+            # Make User
+            user = User.objects.create_user(**data, is_verified=False, is_client=True, organization=organization)
+        else:
+            user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
         return user

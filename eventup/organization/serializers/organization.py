@@ -16,7 +16,7 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class."""
 
-        fields = '__all__'
+        # fields = '__all__'
         model = Organization
         # read_only_fields
         fields = (

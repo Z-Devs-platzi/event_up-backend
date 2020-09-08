@@ -14,7 +14,7 @@ class Organization(GeneralModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Organization data
-    name = models.CharField('name of organization', max_length=100)
+    name = models.CharField('name of organization', max_length=100, unique=True,)
     social_url = models.URLField(max_length=255, blank=True)
     picture = models.ImageField(
         'picture',
