@@ -2,7 +2,6 @@
 
 import uuid
 from django.db import models
-import random
 
 # Utils Model
 from eventup.utils.models import GeneralModel
@@ -23,7 +22,7 @@ class Organization(GeneralModel):
         blank=True,
         null=True
     )
-    code = models.IntegerField(default=random.randrange(1000, 9999), editable=False, unique=True,)
+    code = models.IntegerField(editable=False, unique=True, max_length=9999)
 
     def __str__(self):
         return str(self.name)

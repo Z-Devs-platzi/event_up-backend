@@ -1,5 +1,8 @@
 """ Organizations Serializer """
 
+# Libs
+import random
+
 # Django REST Framework
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -23,6 +26,7 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'social_url',
+            'code'
             # 'picture'
         )
 
@@ -33,3 +37,13 @@ class CreateUpdateOrganizationSerializer(OrganizationModelSerializer):
     social_url = serializers.CharField(
         validators=[UniqueValidator(queryset=Organization.objects.all())]
     )
+
+    def validate(self, data):
+        """Verify passwords match."""
+        # Check Organization Name
+        if 'name_organization' in data and Organization.objects.filter(name=data['name_organization']):
+            raise serializers.ValidationError("Another user already has this organization name.")
+
+    def create(self, data):
+        data.code = random.randrange(1000, 9999)
+        return Organization.objects.create(**data)

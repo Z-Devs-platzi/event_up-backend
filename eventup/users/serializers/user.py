@@ -19,7 +19,8 @@ from eventup.organization.models import Organization
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
-from eventup.organization.serializers.organization import OrganizationModelSerializer
+from eventup.organization.serializers.organization import (
+    OrganizationModelSerializer, CreateUpdateOrganizationSerializer)
 
 # Utilities
 import jwt
@@ -68,13 +69,11 @@ class UserSignUpSerializer(serializers.Serializer):
     last_name = serializers.CharField(min_length=2, max_length=30)
 
     # Organization
+    organization = CreateUpdateOrganizationSerializer()
     name_organization = serializers.CharField(min_length=2, max_length=30, required=False)
 
     def validate(self, data):
         """Verify passwords match."""
-        # Check Organization Name
-        if 'name_organization' in data and Organization.objects.filter(name=data['name_organization']):
-            raise serializers.ValidationError("Another user already has this organization name.")
         # Check Password
         passwd = data['password']
         password_validation.validate_password(passwd)
@@ -84,12 +83,10 @@ class UserSignUpSerializer(serializers.Serializer):
         """Handle user and profile creation."""
         # Make organization
         if 'name_organization' in data:
-            organization = Organization.objects.create(name=data['name_organization'])
+            data.organization = self.organization.create(name=data['name_organization'])
             del data['name_organization']
-            # Make User
-            user = User.objects.create_user(**data, is_verified=False, is_client=True, organization=organization)
-        else:
-            user = User.objects.create_user(**data, is_verified=False, is_client=True)
+        # Make User
+        user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)
         return user
