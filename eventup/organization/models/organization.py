@@ -23,7 +23,7 @@ class Organization(GeneralModel):
         blank=True,
         null=True
     )
-    code = models.UUIDField(default=random.randrange(1000, 9999), editable=False, unique=True,)
+    code = models.IntegerField(default=random.randrange(1000, 9999), editable=False, unique=True,)
 
     def __str__(self):
         return str(self.name)
