@@ -5,7 +5,7 @@ from rest_framework import viewsets
 # from rest_framework.generics import get_object_or_404
 
 # Model
-from eventup.event_templates.serializers import Template
+from eventup.event_templates.models import Template
 
 # Serializers
 from eventup.event_templates.serializers.template import TemplateModelSerializer

@@ -20,6 +20,6 @@ class TemplateModelSerializer(serializers.ModelSerializer):
         # read_only_fields
         fields = (
             'id',
-            'comment'
+            'colors'
         )
 
