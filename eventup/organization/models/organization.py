@@ -22,7 +22,7 @@ class Organization(GeneralModel):
         blank=True,
         null=True
     )
-    code = models.IntegerField(editable=False, unique=True, max_length=9999)
+    code = models.IntegerField(editable=False, unique=True)
 
     def __str__(self):
         return str(self.name)
