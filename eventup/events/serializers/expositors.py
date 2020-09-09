@@ -16,7 +16,7 @@ class ExpositorModelSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class."""
 
-        fields = '__all__'
+        # fields = '__all__'
         model = Expositor
         # read_only_fields
         fields = (
