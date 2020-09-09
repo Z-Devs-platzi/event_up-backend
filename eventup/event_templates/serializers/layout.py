@@ -22,4 +22,3 @@ class LayoutModelSerializer(serializers.ModelSerializer):
             'id',
             'comment'
         )
-

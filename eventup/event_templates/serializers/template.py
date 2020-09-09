@@ -9,6 +9,7 @@ from eventup.event_templates.models import Template, Layout
 # Serializers
 from eventup.event_templates.serializers.layout import LayoutModelSerializer
 
+
 class TemplateModelSerializer(serializers.ModelSerializer):
     """ Template model serializer """
     id = serializers.CharField(source='pk', read_only=True)
