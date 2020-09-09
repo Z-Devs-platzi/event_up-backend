@@ -1,4 +1,4 @@
-"""Expositors views."""
+"""Events views."""
 
 # Django REST Framework
 from rest_framework import viewsets
@@ -27,16 +27,16 @@ from eventup.utils import (
 from eventup.utils.interface.responses import CustomActions
 
 
-class ExpositorViewSet(
+class EventViewSet(
         CustomCreateModelMixin,
         CustomRetrieveModelMixin,
         CustomListModelMixin,
         CustomUpdateModelMixin,
         CustomDestroyModelMixin,
         viewsets.GenericViewSet):
-    """Expositor view set.
+    """Event view set.
 
-       Crud for a expositors
+       Crud for a events
     """
     custom_actions = CustomActions()
     queryset = Event.objects.all()

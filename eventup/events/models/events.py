@@ -30,7 +30,8 @@ class Event(GeneralModel):
     # Event Relations
     template = models.ForeignKey(
         to="event_templates.Template",
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
+        null=True,
     )
     sponsor = models.ManyToManyField(
         to="Sponsor",
