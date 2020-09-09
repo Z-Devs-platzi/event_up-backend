@@ -4,25 +4,27 @@
 from rest_framework import serializers
 
 # Models
-from eventup.event_templates.models import Template
+from eventup.event_templates.models import Template, Layout
 
+# Serializers
+from eventup.event_templates.serializers.layout import LayoutModelSerializer
 
 class TemplateModelSerializer(serializers.ModelSerializer):
     """ Template model serializer """
-
     id = serializers.CharField(source='pk', read_only=True)
+    layout = LayoutModelSerializer(read_only=True)
 
     class Meta:
         """Meta class."""
 
-        # fields = '__all__'
         model = Template
         # read_only_fields
         fields = (
             'id',
             'colors',
             'font',
-            'layout'
+            'layout',
+            'layout_id'
         )
 
 
@@ -32,16 +34,16 @@ class CreateUpdateTemplateSerializer(TemplateModelSerializer):
     colors = serializers.CharField(min_length=2, max_length=500)
     font = serializers.CharField(min_length=2, max_length=500)
     # Layout
-    layout_id = serializers.CharField(min_length=2, max_length=100)
+    layout_id = serializers.CharField(min_length=1, max_length=100)
 
     def validate(self, data):
-        """Verify passwords match."""
-        # Check Template Name
-        if 'layout' in data and Template.objects.filter(pk=data['layout']):
+        """Verify information."""
+        try:
+            self.context['layout'] = Layout.objects.get(id=data['layout_id'])
+        except Layout.DoesNotExist:
             raise serializers.ValidationError("The Id not exist.")
-        else:
-            data.update({'layout': Template.objects.get_by_id(data['layout'])})
-            # del data['layout_id']
+        del data['layout_id']
+        return data
 
     def create(self, data):
-        return Template.objects.create(**data)
+        return Template.objects.create(**data, layout=self.context['layout'])

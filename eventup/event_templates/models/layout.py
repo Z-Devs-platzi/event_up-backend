@@ -16,4 +16,4 @@ class Layout(GeneralModel):
     comment = models.CharField('description of the component/layout base to the event', max_length=500)
 
     def __str__(self):
-        return str(self.comment)
+        return str({"commnet": self.comment})

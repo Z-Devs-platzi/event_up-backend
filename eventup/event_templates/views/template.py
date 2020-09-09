@@ -46,7 +46,7 @@ class TemplateViewSet(
 
     def get_serializer_class(self):
         """Return serializer based on action."""
-        if self.action == ['create', 'update']:
+        if self.action in ['create', 'update']:
             return CreateUpdateTemplateSerializer
         return TemplateModelSerializer
 

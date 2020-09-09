@@ -17,6 +17,3 @@ class Template(GeneralModel):
     # Relations
     # Templates Relations
     layout = models.ForeignKey('event_templates.Layout', on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return str(self.name)
