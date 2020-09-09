@@ -10,6 +10,7 @@ from eventup.events.models import Event
 # Serializers
 from eventup.event_templates.serializers.template import TemplateModelSerializer
 
+
 class EventModelSerializer(serializers.HyperlinkedModelSerializer):
     """ Event model serializer """
 
@@ -63,3 +64,6 @@ class CreateUpdateEventSerializer(serializers.HyperlinkedModelSerializer):
             # 'sponsor',
             # 'schedule',
         )
+
+    # def create(self, data):
+    #     CreateUpdateTemplateSerializer
