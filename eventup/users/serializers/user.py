@@ -18,6 +18,8 @@ from eventup.users.models import User, Profile
 
 # Serializers
 from eventup.users.serializers.profiles import ProfileModelSerializer
+from eventup.organization.serializers.organization import (
+    OrganizationModelSerializer, CreateUpdateOrganizationSerializer)
 
 # Utilities
 import jwt
@@ -27,6 +29,7 @@ class UserModelSerializer(serializers.ModelSerializer):
     """User model serializer."""
 
     profile = ProfileModelSerializer(read_only=True)
+    organization = OrganizationModelSerializer(read_only=True)
 
     class Meta:
         """Meta class."""
@@ -37,7 +40,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email',
-            'profile'
+            'organization',
+            'profile',
         )
 
 
@@ -63,19 +67,25 @@ class UserSignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=2, max_length=30)
     last_name = serializers.CharField(min_length=2, max_length=30)
 
+    # Organization
+    name_organization = serializers.CharField(min_length=2, max_length=30, required=False)
+
     def validate(self, data):
         """Verify passwords match."""
+        # Check Password
         passwd = data['password']
-        # passwd_conf = data['password_confirmation']
-        # if passwd != passwd_conf:
-        #     raise serializers.ValidationError("Passwords don't match.")
         password_validation.validate_password(passwd)
         return data
 
     def create(self, data):
         """Handle user and profile creation."""
-        # data.pop('password_confirmation')
-        # role = RoleAdmin.objects.get_or_create(name='admin')
+        # Make organization
+        if 'name_organization' in data:
+            organization = CreateUpdateOrganizationSerializer()
+            organization_data = organization.create(data=data['name_organization'])
+            del data['name_organization']
+            data.update({'organization': organization_data})
+        # Make User
         user = User.objects.create_user(**data, is_verified=False, is_client=True)
         Profile.objects.create(user=user)
         send_confirmation_email.delay(user_pk=user.pk)

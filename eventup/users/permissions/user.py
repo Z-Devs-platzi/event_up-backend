@@ -10,3 +10,11 @@ class IsAccountOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
         """Check obj and user are the same."""
         return request.user == obj
+
+
+class IsNotAccountOwner(BasePermission):
+    """Allow access only to objects not owned by the requesting user."""
+
+    def has_object_permission(self, request, view, obj):
+        """Check obj and user are the same."""
+        return not request.user == obj

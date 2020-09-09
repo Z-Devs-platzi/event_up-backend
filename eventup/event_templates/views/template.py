@@ -1,17 +1,14 @@
-"""Events views."""
+"""Template views."""
 
 # Django REST Framework
 from rest_framework import viewsets
 # from rest_framework.generics import get_object_or_404
 
 # Model
-from eventup.events.models import Event
+from eventup.event_templates.models import Template
 
 # Serializers
-from eventup.events.serializers import (
-    EventModelSerializer,
-    CreateUpdateEventSerializer,
-)
+from eventup.event_templates.serializers.template import (TemplateModelSerializer, CreateUpdateTemplateSerializer)
 
 # Permissions
 from rest_framework.permissions import IsAuthenticated
@@ -27,20 +24,20 @@ from eventup.utils import (
 from eventup.utils.interface.responses import CustomActions
 
 
-class EventViewSet(
+class TemplateViewSet(
         CustomCreateModelMixin,
         CustomRetrieveModelMixin,
         CustomListModelMixin,
         CustomUpdateModelMixin,
         CustomDestroyModelMixin,
         viewsets.GenericViewSet):
-    """Event view set.
+    """ Template view set
 
-       Crud for a events
+        Crud for templates
     """
     custom_actions = CustomActions()
-    queryset = Event.objects.all()
-    serializer_class = EventModelSerializer
+    queryset = Template.objects.all()
+    serializer_class = TemplateModelSerializer
 
     def get_permissions(self):
         """Assign permission based on action."""
@@ -49,6 +46,12 @@ class EventViewSet(
 
     def get_serializer_class(self):
         """Return serializer based on action."""
-        if self.action == ['create', 'update']:
-            return CreateUpdateEventSerializer
-        return EventModelSerializer
+        if self.action in ['create', 'update']:
+            return CreateUpdateTemplateSerializer
+        return TemplateModelSerializer
+
+    def get_queryset(self):
+        """Restrict list to public-only."""
+        if self.action == 'list':
+            return self.queryset.filter(status='active')
+        return self.queryset

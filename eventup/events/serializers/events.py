@@ -2,51 +2,68 @@
 
 # Django REST Framework
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 # Models
 from eventup.events.models import Event
+
+# Serializers
+from eventup.event_templates.serializers.template import TemplateModelSerializer
 
 
 class EventModelSerializer(serializers.HyperlinkedModelSerializer):
     """ Event model serializer """
 
+    id = serializers.CharField(source='pk', read_only=True)
+    template = TemplateModelSerializer(read_only=True)
+
     class Meta:
         """ Meta class """
 
         model = Event
+        # read_only_fields
         fields = (
-            'pk',
+            'id',
             'name',
             'date',
             'description',
-            'url',
             'banner_img',
             'banner_title',
+            'url',
             'template',
             # 'sponsor',
             # 'schedule',
         )
 
-    def validate(self, data):
 
-        response = data
-        return response
+class CreateUpdateEventSerializer(serializers.HyperlinkedModelSerializer):
+    """Create expositor serializer."""
 
-    def create(self, data):
-        return Event.objects.create(**data)
+    id = serializers.CharField(source='pk', read_only=True)
 
-    def update(self, instance, validated_data):
-        event_validated_data = validated_data.pop('event', None)
+    url = serializers.URLField(
+        validators=[UniqueValidator(queryset=Event.objects.all())]
+    )
 
-        event = instance.event
-        event.name = event_validated_data.get('name', event.name)
-        event.date = event_validated_data.get('date', event.date)
-        event.description = event_validated_data.get('description', event.description)
-        event.url = event_validated_data.get('url', event.url)
-        event.banner_img = event_validated_data.get('banner_img', event.banner_img)
-        event.banner_title = event_validated_data.get('')
+    class Meta:
+        """ Meta class """
 
-        event.save()
+        model = Event
+        # read_only_fields
+        fields = (
+            'id',
+            'name',
+            'date',
+            'description',
+            'banner_title',
+            'banner_img',
+            'url',
+            'colors',
+            'font',
+            'layout_id',
+            # 'sponsor',
+            # 'schedule',
+        )
 
-        instance.save()
-        return instance
+    # def create(self, data):
+    #     CreateUpdateTemplateSerializer

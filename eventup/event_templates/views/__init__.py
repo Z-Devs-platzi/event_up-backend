@@ -1,2 +1,2 @@
-from .templates import *  # noqa
+from .template import *  # noqa
 from .layout import *  # noqa

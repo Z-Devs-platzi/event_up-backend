@@ -52,7 +52,8 @@ RUN chmod +x /start-flower
 COPY . /app
 
 # Fix Folder Static
-run mkdir -p /app/eventup/static
+RUN mkdir /static
+COPY ./static/ /static/
 
 RUN chown -R django /app
 

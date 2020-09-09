@@ -14,8 +14,15 @@ class Expositor(GeneralModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Expositor data
-    name = models.CharField(max_length=100)
-    bio = models.CharField(max_length=500, blank=True)
+    name = models.CharField('name of expositor', max_length=100)
+    email_expositor = models.EmailField(
+        'email address',
+        unique=True,
+        error_messages={
+            'unique': 'A expositor with that email already exists.'
+        }
+    )
+    biography = models.CharField(max_length=500, blank=True)
     twitter = models.URLField(max_length=255, blank=True)
     picture = models.ImageField(
         'profile picture',

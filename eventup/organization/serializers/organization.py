@@ -1,7 +1,11 @@
-""" Organization Serializer """
+""" Organizations Serializer """
+
+# Libs
+import random
 
 # Django REST Framework
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 # Models
 from eventup.organization.models import Organization
@@ -10,33 +14,39 @@ from eventup.organization.models import Organization
 class OrganizationModelSerializer(serializers.ModelSerializer):
     """ Organization model serializer """
 
+    id = serializers.CharField(source='pk', read_only=True)
+
     class Meta:
-        """ Meta class """
+        """Meta class."""
+
+        # fields = '__all__'
         model = Organization
+        # read_only_fields
         fields = (
-            'pk',
+            'id',
             'name',
             'social_url',
-            'logo'
+            'code'
+            # 'picture'
         )
 
-    def validate(self, data):
 
-        response = data
-        return response
+class CreateUpdateOrganizationSerializer(OrganizationModelSerializer):
+    """Create organization serializer."""
+
+    social_url = serializers.CharField(
+        validators=[UniqueValidator(queryset=Organization.objects.all())]
+    )
+
+    def validate(self, data):
+        """Verify passwords match."""
+        # Check Organization Name
+        try:
+            Organization.objects.get(name=data)
+            raise serializers.ValidationError("Another user already has this organization name.")
+        except Organization.DoesNotExist:
+            return data
 
     def create(self, data):
-        return Organization.objects.create(**data)
-
-    def update(self, instance, validated_data):
-        organization_validated_data = validated_data.pop('organization', None)
-
-        organization = instance.organization
-        organization.name = organization_validated_data.get('name', organization.name)
-        organization.social_url = organization_validated_data.get('social_url', organization.social_url)
-        organization.logo = organization_validated_data.get('logo', organization.logo)
-
-        organization.save()
-
-        instance.save()
-        return instance
+        # return Organization.objects.create(**data, code=random.randrange(1000, 9999))
+        return Organization.objects.create(name=data, code=random.randrange(1000, 9999))

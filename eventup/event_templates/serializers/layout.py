@@ -7,31 +7,18 @@ from rest_framework import serializers
 from eventup.event_templates.models import Layout
 
 
-class LayoutModelSerializer(serializers.HyperlinkedModelSerializer):
+class LayoutModelSerializer(serializers.ModelSerializer):
     """ Layout model serializer """
 
+    id = serializers.CharField(source='pk', read_only=True)
+
     class Meta:
-        """ Meta class """
+        """Meta class."""
+
+        # fields = '__all__'
         model = Layout
+        # read_only_fields
         fields = (
-            'pk',
-            'comment',
+            'id',
+            'comment'
         )
-
-    def validate(self, data):
-
-        response = data
-        return response
-
-    def create(self, data):
-        return Layout.objects.create(**data)
-
-    def update(self, instance, validated_data):
-        layout_validated_data = validated_data.pop('layout', None)
-
-        layout = instance.layout
-        layout.comment = layout_validated_data.get('comment', layout.comment)
-
-        layout.save()
-        instance.save()
-        return instance

@@ -7,7 +7,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 # Views
-from eventup.event_templates.views import templates as template_views
+from eventup.event_templates.views import template as template_views
 from eventup.event_templates.views import layout as layout_views
 
 
