@@ -37,12 +37,11 @@ class CreateUpdateTemplateSerializer(TemplateModelSerializer):
     def validate(self, data):
         """Verify passwords match."""
         # Check Template Name
-        if 'layout_id' in data and Template.objects.filter(pk=data['layout_id']):
+        if 'layout' in data and Template.objects.filter(pk=data['layout']):
             raise serializers.ValidationError("The Id not exist.")
         else:
-            data.update({'layout': Template.objects.get_by_id(data['layout_id'])})
-            del data['layout_id']
+            data.update({'layout': Template.objects.get_by_id(data['layout'])})
+            # del data['layout_id']
 
     def create(self, data):
-        # return Template.objects.create(**data, code=random.randrange(1000, 9999))
         return Template.objects.create(**data)
