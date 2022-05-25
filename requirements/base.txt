@@ -20,7 +20,7 @@ django-seed==0.2.2
 django-environ==0.4.5
 
 # JWT
-pyjwt==1.7.1
+pyjwt==2.4.0
 
 # Passwords security
 argon2-cffi==20.1.0
