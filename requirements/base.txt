@@ -1,7 +1,7 @@
 # Base
 pytz==2018.7
 python-slugify==1.2.6
-pillow==9.0.1
+pillow==10.0.1
 psycopg2==2.8.5 --no-binary psycopg2
 
 # Cors
